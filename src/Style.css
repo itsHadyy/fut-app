@@ -1,0 +1,64 @@
+@import url('https://fonts.googleapis.com/css2?family=Inria+Sans:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap');
+
+:root{
+    --black: #000;
+    --gray: #7F7F7F;
+    --lightGray: #D8D8D8;
+    --white: #fff;
+
+    --blue: #4D92CE;
+    --darkBlue: #2D2E75;
+    --purple: #8548FB;
+
+    --body: "Inria Sans", sans-serif;
+}
+
+body{
+    background-color: var(--white);
+    color: var(--gray);
+    padding: 0;
+    margin: 0;
+    font-family: var(--body);
+    scroll-behavior: smooth;
+}
+
+header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 40px 100px;
+}
+
+header ul{
+    background-color: var(--lightGray);
+    padding: 16px 30px;
+    border-radius: 40px;
+}
+
+header li{
+    display: inline;
+    margin: 0 12px;
+}
+
+header a{
+    color: var(--gray);
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.active{
+    color: var(--blue) !important;
+}
+
+.btn{
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    color: var(--blue);
+    background-color: var(--lightGray);
+    border-radius: 40px;
+    border: 0;
+    padding: 10px 20px;
+}
