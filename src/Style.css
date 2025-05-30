@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Inria+Sans:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap');
 
-:root{
+:root {
     --black: #000;
     --gray: #7F7F7F;
     --lightGray: #D8D8D8;
@@ -13,7 +13,11 @@
     --body: "Inria Sans", sans-serif;
 }
 
-body{
+* {
+    box-sizing: border-box;
+}
+
+body {
     background-color: var(--white);
     color: var(--gray);
     padding: 0;
@@ -22,35 +26,78 @@ body{
     scroll-behavior: smooth;
 }
 
-header{
+.gap {
+    height: 200px;
+}
+
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 40px 100px;
+    padding: 50px 100px;
+    z-index: 1000;
+    transition: background-color 0.3s ease;
 }
 
-header ul{
+header.blurred {
+    background-color: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+header>div:first-child {
+    flex: 1;
+}
+
+header>div:nth-child(2) {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+header>div:last-child {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+}
+
+header ul {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
     background-color: var(--lightGray);
     padding: 16px 30px;
     border-radius: 40px;
+    align-items: center;
+    justify-content: space-between;
 }
 
-header li{
-    display: inline;
-    margin: 0 12px;
-}
-
-header a{
+header ul li a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+    transition: color 0.3s ease;
     color: var(--gray);
     text-decoration: none;
     font-size: 14px;
 }
 
-.active{
-    color: var(--blue) !important;
+header ul li a:hover,
+header ul li a.active {
+    color: #007bff;
 }
 
-.btn{
+header img {
+    height: 40px;
+    width: auto;
+}
+
+.btn {
     display: flex;
     gap: 10px;
     justify-content: center;
@@ -61,4 +108,56 @@ header a{
     border-radius: 40px;
     border: 0;
     padding: 10px 20px;
+    cursor: pointer;
+}
+
+.home01 {
+    padding: 20px 100px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 34px;
+    font-weight: 400;
+    line-height: 1.5em;
+    font-size: 28px;
+    text-align: justify;
+}
+
+.home-banner {
+    background-image: url('../public/media/Home/Frame\ 133.png');
+    background-size: cover;
+    padding: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    color: var(--white);
+    font-size: 20px;
+    width: 100%;
+    min-height: 520px;
+}
+
+.home-banner .btn {
+    color: var(--white);
+    background-color: #66666690;
+    transition: all ease 0.3s;
+}
+
+.home-banner .btn:hover {
+    background-color: #666666;
+}
+
+a {
+    text-decoration: none;
+    color: var(--blue);
+
+}
+
+.clients{
+    background-color: var(--lightGray);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 30px 100px;
+    margin: 40px 0;
 }

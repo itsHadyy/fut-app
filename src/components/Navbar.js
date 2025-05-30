@@ -1,33 +1,50 @@
-import { Link } from "react-router-dom";
-import logo from '../Logo.svg';
+import { Link, useLocation } from "react-router-dom";
+import logo from '../logo.png';
+import { useEffect, useState } from 'react';
 
 function Navbar() {
+    const [isScrolled, setIsScrolled] = useState(false);
+    const location = useLocation();
+
+    useEffect(() => {
+        const handleScroll = () => {
+            if (window.scrollY > 20) {
+                setIsScrolled(true);
+            } else {
+                setIsScrolled(false);
+            }
+        };
+
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
+
     return (
-        <header>
+        <header className={isScrolled ? 'blurred' : ''}>
             <div>
                 <ul>
                     <li>
-                        <Link to="/" className="active">
+                        <Link to="/" className={location.pathname === '/' ? 'active' : ''}>
                             Home
                         </Link>
                     </li>
                     <li>
-                        <Link to="/about">
+                        <Link to="/about" className={location.pathname === '/about' ? 'active' : ''}>
                             About Us
                         </Link>
                     </li>
                     <li>
-                        <Link to="/portfolio">
+                        <Link to="/portfolio" className={location.pathname === '/portfolio' ? 'active' : ''}>
                             Portfolio
                         </Link>
                     </li>
                     <li>
-                        <Link to="/products">
+                        <Link to="/products" className={location.pathname === '/products' ? 'active' : ''}>
                             Products
                         </Link>
                     </li>
                     <li>
-                        <Link to="/services">
+                        <Link to="/services" className={location.pathname === '/services' ? 'active' : ''}>
                             Services
                         </Link>
                     </li>

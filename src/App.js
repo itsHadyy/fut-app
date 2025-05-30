@@ -10,6 +10,7 @@ function App() {
       <Router>
         <ScrollToTop />
         <Navbar />
+        <div className='gap' />
         <Routes>
           <Route path="/" element={<Home />} />
         </Routes>
