@@ -27,7 +27,7 @@ body {
 }
 
 .gap {
-    height: 200px;
+    height: 140px;
 }
 
 header {
@@ -150,14 +150,110 @@ header img {
 a {
     text-decoration: none;
     color: var(--blue);
-
 }
 
-.clients{
+.clients {
     background-color: var(--lightGray);
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 30px 100px;
     margin: 40px 0;
+}
+
+h1,
+h2 {
+    color: var(--blue);
+    font-size: 48px;
+}
+
+h2 {
+    font-size: 36px;
+}
+
+.home02 {
+    text-align: center;
+    width: 80%;
+    margin: 30px auto;
+    font-size: 24px;
+    line-height: 1.5em;
+}
+
+.flex {
+    margin: 20px 100px;
+    display: flex;
+    font-size: 24px;
+    align-items: center;
+    gap: 40px;
+}
+
+.flex p {
+    color: var(--lightGray);
+}
+
+.btn-container {
+    display: flex;
+    gap: 20px;
+    margin: 20px auto !important;
+}
+
+.btn-container .btn, .home02 .btn {
+    cursor: auto;
+}
+
+.flex .btn {
+    color: var(--gray);
+    font-size: 24px;
+    border-radius: 10px;
+}
+
+.flex a {
+    font-size: 24px;
+}
+
+.flex-img img {
+    width: 700px;
+}
+
+.home02 .btn {
+    display: inline;
+}
+
+.process-container{
+    position: relative;
+    margin-top: 70px;
+}
+
+.process{
+    background-image: url("../public/media/Home/Vector.png");
+    background-size:auto;
+    background-repeat: no-repeat;
+    width: 80%;
+    margin: auto;
+    height: 380px;
+    position: absolute;
+    top: 70%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: -99;
+}
+
+.row{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 70px;
+}
+
+.row:nth-child(2) {
+    justify-content: center;
+    gap: 100px;
+}
+
+.row .card{
+    min-width: 350px;
+    background-color: var(--lightGray);
+    border-radius: 30px;
+    padding: 50px 80px;
+    color: var(--black);
 }
