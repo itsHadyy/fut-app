@@ -4,6 +4,8 @@ import './Style.css';
 import ScrollToTop from "./components/ScrollToTop";
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
+import Footer from './components/Footer';
+
 function App() {
   return (
     <div className="App">
@@ -14,6 +16,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
         </Routes>
+        <Footer />
       </Router>
     </div>
   );
