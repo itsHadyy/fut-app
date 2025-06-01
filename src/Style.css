@@ -137,6 +137,12 @@ header img {
     min-height: 520px;
 }
 
+.home-banner h1 {
+    color: var(--white);
+    font-size: 54px;
+    line-height: 1.2em;
+}
+
 .home-banner .btn {
     color: var(--white);
     background-color: #66666690;
