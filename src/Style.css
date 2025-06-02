@@ -689,13 +689,18 @@ footer {
     margin-bottom: 20px;
 }
 
+ol ul{
+    padding: 10px;
+}
+
 .service-content li {
     margin-bottom: 10px;
+    color: var(--black);
 }
 
 .service-content ul li {
-    list-style: disc;
-    margin-left: 20px;
+    list-style: disc !important;
+    margin-left: 0px !important;
 }
 
 .service-content ol li {
@@ -839,4 +844,61 @@ footer {
 
 .services-intro p {
     margin-bottom: 15px;
+}
+
+.projects-section {
+    padding: 40px 100px;
+    text-align: center;
+}
+
+.projects-section h2 {
+    color: var(--blue);
+    font-size: 36px;
+    margin-bottom: 30px;
+}
+
+.projects-slideshow {
+    display: flex;
+    overflow-x: scroll;
+    overflow-y: visible;
+    gap: 30px;
+    padding-bottom: 20px;
+    margin: 40px auto;
+}
+
+.project-item {
+    flex: 0 0 auto;
+    width: 350px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 400px auto !important;
+    z-index: 99;
+}
+
+.project-item:hover {
+    scale: 1.05;
+}
+
+.project-item img {
+    width: 100%;
+    height: auto;
+}
+
+.project-item p {
+    color: var(--blue);
+    font-size: 18px;
+    text-align: center;
+    margin: 0;
+}
+
+.projects-slideshow::-webkit-scrollbar {
+    display: none;
+}
+
+.projects-slideshow {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
 }

@@ -1,13 +1,42 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; // Assuming you are using React Router v6
 
 function Services() {
     const [activeService, setActiveService] = useState('mobile');
+    const navigate = useNavigate(); // Initialize navigate hook
+
+    // Placeholder project data - replace with your actual data
+    const projects = {
+        mobile: [
+            { id: 1, name: 'PRE Developments', image: 'media/Portfolio/Mobile/PRE.png' },
+            { id: 2, name: 'JDAR Developments', image: 'media/Portfolio/Mobile/JDAR.png' },
+            { id: 3, name: 'al ahly sabour Developments', image: 'media/Portfolio/Mobile/ahly.png' },
+            { id: 4, name: 'Buzz Mobility', image: 'media/Portfolio/Mobile/Buzz.png' },
+            { id: 5, name: 'Orange', image: 'media/Portfolio/Mobile/orange.png' },
+            { id: 6, name: 'Vinde', image: 'media/Portfolio/Mobile/vinde.png' },
+        ],
+        websites: [
+            { id: 5, name: 'Website Project 1', image: 'placeholder.png' },
+            { id: 6, name: 'Website Project 2', image: 'placeholder.png' },
+            // Add more website projects here
+        ],
+        smart_systems: [
+            { id: 7, name: 'Smart System Project 1', image: 'placeholder.png' },
+            { id: 8, name: 'Smart System Project 2', image: 'placeholder.png' },
+            // Add more smart system projects here
+        ],
+    };
+
+    const handleProjectClick = (projectId) => {
+        // Navigate to the project details page
+        navigate(`/projects/${projectId}`);
+    };
 
     const renderContent = () => {
         switch (activeService) {
             case 'mobile':
                 return (
-                    <div>
+                    <>
                         <div className="services-intro">
                             <img src="media/Services/Mobile/Robot Hand left.png" alt="Robot arm left" className="services-intro-image left-image" />
                             <div className="services-intro-content">
@@ -114,22 +143,58 @@ function Services() {
                                 </li>
                             </ol>
                         </div>
-                    </div>
-
+                        <div className="projects-section">
+                            <h2>Check out our work!</h2>
+                            <div className="projects-slideshow mobile-projects">
+                                {projects.mobile.map(project => (
+                                    <div key={project.id} className="project-item" onClick={() => handleProjectClick(project.id)}>
+                                        <img src={project.image} alt={project.name} />
+                                        <p>{project.name}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </>
                 );
             case 'websites':
                 return (
-                    <div className="service-content">
-                        <h2>Websites</h2>
-                        <p>Content for Websites goes here...</p>
-                    </div>
+                    <>
+                        <div className="service-content">
+                            <h2>Websites</h2>
+                            <p>Content for Websites goes here...</p>
+                        </div>
+                        <div className="projects-section">
+                            <h2>Check out our work!</h2>
+                            <div className="projects-slideshow websites-projects">
+                                {projects.websites.map(project => (
+                                    <div key={project.id} className="project-item" onClick={() => handleProjectClick(project.id)}>
+                                        <img src={project.image} alt={project.name} />
+                                        <p>{project.name}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </>
                 );
             case 'smart_systems':
                 return (
-                    <div className="service-content">
-                        <h2>Smart Systems</h2>
-                        <p>Content for Smart Systems goes here...</p>
-                    </div>
+                    <>
+                        <div className="service-content">
+                            <h2>Smart Systems</h2>
+                            <p>Content for Smart Systems goes here...</p>
+                        </div>
+                        <div className="projects-section">
+                            <h2>Check out our work!</h2>
+                            <div className="projects-slideshow smart-systems-projects">
+                                {projects.smart_systems.map(project => (
+                                    <div key={project.id} className="project-item" onClick={() => handleProjectClick(project.id)}>
+                                        <img src={project.image} alt={project.name} />
+                                        <p>{project.name}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </>
                 );
             default:
                 return null;
