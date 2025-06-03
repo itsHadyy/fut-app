@@ -159,13 +159,103 @@ function Services() {
             case 'websites':
                 return (
                     <>
+                        <div className="services-intro">
+                            <img src="media/Services/Mobile/Robot Hand left.png" alt="Robot arm left" className="services-intro-image left-image" />
+                            <div className="services-intro-content">
+                                <h2>Build Stunning, High-Performing Websites That Drive Results!</h2>
+                                <p>
+                                    Your website is your digital storefront—make it work for you! Our expert developers craft responsive, visually captivating, and high-speed websites tailored to your business needs. Whether it's an e-commerce platform, corporate site, or custom web solution, we bring innovative designs and seamless functionality to life.
+                                </p>
+                                <p>Let's create an <strong>online experience </strong>that converts visitors into <strong>loyal customers.</strong></p>
+                                <p><a href="#">Contact us today and take your web presence to the next level!</a></p>
+                            </div>
+                            <img src="media/Services/Mobile/Robot Hand right.png" alt="Robot arm right" className="services-intro-image right-image" />
+                        </div>
                         <div className="service-content">
-                            <h2>Websites</h2>
-                            <p>Content for Websites goes here...</p>
+                            <h2>Why You Need a Website</h2>
+                            <p>Building your own website is one of the best investments you can make, whether for personal branding, business growth, or creative expression. Here's why:</p>
+                            <ol>
+                                <li>
+                                    <strong>Establish Your Online Presence</strong>
+                                    <ul>
+                                        <li>Be easily accessible to anyone searching for you or your services.</li>
+                                        <li>Stand out in your industry or niche with a unique digital identity.</li>
+                                        <li>Gain credibility—people trust brands and individuals who have a professional website.</li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <strong>Full Creative Control</strong>
+                                    <ul>
+                                        <li>Design your website exactly how you want—no restrictions from third-party platforms.</li>
+                                        <li>Customize your branding, colors, layouts, and functionality to match your style.</li>
+                                        <li>Publish content without worrying about changing algorithms or platform limitations.</li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <strong>Increase Visibility & Reach</strong>
+                                    <ul>
+                                        <li>Reach a global audience beyond your local community.</li>
+                                        <li>Improve search engine rankings with SEO, making it easier for people to find you.</li>
+                                        <li>Share your expertise, services, or products with potential customers worldwide.</li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <strong>Build a Strong Brand & Reputation</strong>
+                                    <ul>
+                                        <li>Make a lasting impression with a well-designed, professional website.</li>
+                                        <li>Share testimonials, case studies, and success stories to boost credibility.</li>
+                                        <li>Strengthen your identity and differentiate yourself from competitors.</li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <strong>Drive Business Growth</strong>
+                                    <ul>
+                                        <li>Generate leads and sales by showcasing your products or services.</li>
+                                        <li>Provide customers with essential information, reducing time spent on inquiries.</li>
+                                        <li>Sell products directly online with an integrated e-commerce platform.</li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <strong>Connect with Your Audience</strong>
+                                    <ul>
+                                        <li>Engage visitors with blogs, newsletters, and personalized content.</li>
+                                        <li>Build a community and foster relationships with your audience.</li>
+                                        <li>Collect feedback through forms and surveys to improve your offerings.</li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <strong>Cost-Effective Marketing</strong>
+                                    <ul>
+                                        <li>Avoid expensive print or traditional media advertising.</li>
+                                        <li>Use digital marketing techniques like SEO, email marketing, and social media integration.</li>
+                                        <li>Run targeted campaigns that drive traffic directly to your site.</li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <strong>Monetization Opportunities</strong>
+                                    <ul>
+                                        <li>Earn money through ads, affiliate marketing, or selling your own products and services.</li>
+                                        <li>Offer exclusive content through memberships or subscriptions.</li>
+                                        <li>Attract sponsorships and collaborations once you establish a strong online presence.</li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <strong>Future-Proof Your Brand</strong>
+                                    <ul>
+                                        <li>Stay relevant and competitive in an increasingly digital world.</li>
+                                        <li>Adapt and update your site as your needs evolve.</li>
+                                        <li>Secure your place in the online space instead of relying on temporary social media platforms.</li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <strong>Final Thoughts</strong>
+                                    <p>With all these advantages, having a website is not just a luxury—it's a necessity! Whether you're a business, freelancer, creator, or entrepreneur, your website is your personal space on the internet that helps you grow, connect, and succeed.</p>
+                                </li>
+                            </ol>
                         </div>
                         <div className="projects-section">
                             <h2>Check out our work!</h2>
-                            <div className="projects-slideshow websites-projects">
+                            <div className="projects-slideshow mobile-projects">
                                 {projects.websites.map(project => (
                                     <div key={project.id} className="project-item" onClick={() => handleProjectClick(project.id)}>
                                         <img src={project.image} alt={project.name} />
@@ -179,13 +269,110 @@ function Services() {
             case 'smart_systems':
                 return (
                     <>
+                        <div className="services-intro">
+                            <img src="media/Services/Mobile/Robot Hand left.png" alt="Robot arm left" className="services-intro-image left-image" />
+                            <div className="services-intro-content">
+                                <h2>Empower Your Business with Intelligent Smart Systems!</h2>
+                                <p>
+                                    Stay ahead of the competition with cutting-edge smart systems designed to automate, optimize, and elevate your operations. From Al-driven solutions to IoT integrations, our advanced technology streamlines workflows, enhances efficiency, and drives innovation. Whether it's smart security, automation, or data-driven intelligence, we craft systems that adapt to your needs.
+                                </p>
+                                <p>Step into the future today!<br /> <a href="#">Contact us to develop smart solutions that transform your business.</a></p>
+                            </div>
+                            <img src="media/Services/Mobile/Robot Hand right.png" alt="Robot arm right" className="services-intro-image right-image" />
+                        </div>
                         <div className="service-content">
-                            <h2>Smart Systems</h2>
-                            <p>Content for Smart Systems goes here...</p>
+                            <h2>Why Smart Systems Are Essential</h2>
+                            <p>Smart systems use advanced technology to automate processes, improve efficiency, and enhance daily life. Whether for businesses, homes, or industries, these intelligent solutions optimize operations and create a seamless, connected experience.</p>
+                            <ol>
+                                <li>
+                                    <strong>Increased Efficiency & Automation</strong>
+                                    <ul>
+                                        <li>Smart systems automate repetitive tasks, reducing the need for manual intervention.</li>
+                                        <li>Businesses can streamline operations, cut costs, and boost productivity.</li>
+                                        <li>Homes benefit from automated lighting, climate control, and security systems.</li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <strong>Enhanced Security & Safety</strong>
+                                    <ul>
+                                        <li>Al-powered surveillance ensures real-time monitoring and threat detection.</li>
+                                        <li>Smart access control systems provide biometric authentication for enhanced security.</li>
+                                        <li>Automated alerts notify users of potential hazards or unauthorized access.</li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <strong>Energy Conservation & Sustainability</strong>
+                                    <ul>
+                                        <li>Smart thermostats and lighting adjust based on occupancy, reducing energy waste.</li>
+                                        <li>Businesses optimize energy consumption to lower costs and environmental impact.</li>
+                                        <li>Smart grids and renewable energy integration contribute to a sustainable future.</li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <strong>Seamless Connectivity & Integration</strong>
+                                    <ul>
+                                        <li>Smart systems connect devices across various platforms for a unified experience.</li>
+                                        <li>Homes and workplaces benefit from IoT-enabled appliances and automation tools.</li>
+                                        <li>Businesses enhance communication and workflow efficiency through integrated solutions.</li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <strong>Improved User Experience & Convenience</strong>
+                                    <ul>
+                                        <li>Al-driven personal assistants simplify tasks, from scheduling to controlling smart devices.</li>
+                                        <li>Hands-free voice commands enhance accessibility and ease of use.</li>
+                                        <li>Predictive technology learns user preferences for a tailored experience.</li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <strong>Cost Savings & Operational Optimization</strong>
+                                    <ul>
+                                        <li>Automated systems reduce labor costs and improve resource management.</li>
+                                        <li>Businesses track inventory, monitor equipment health, and optimize logistics in real time.</li>
+                                        <li>Smart home automation lowers utility bills through efficient energy usage.</li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <strong>Data-Driven Insights & Decision-Making</strong>
+                                    <ul>
+                                        <li>Al-powered analytics help businesses make informed decisions with real-time data.</li>
+                                        <li>Predictive maintenance ensures longevity and reliability of equipment.</li>
+                                        <li>Homes and workplaces benefit from smart monitoring and performance optimization.</li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <strong>Remote Access & Control</strong>
+                                    <ul>
+                                        <li>Users can manage smart systems from anywhere via mobile apps and cloud platforms.</li>
+                                        <li>Businesses gain remote control over security, operations, and facility management.</li>
+                                        <li>Homeowners adjust settings, monitor security, and control appliances remotely.</li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <strong>Enhanced Health & Well-being</strong>
+                                    <ul>
+                                        <li>Smart health systems track fitness, monitor vitals, and provide personalized recommendations.</li>
+                                        <li>Al-driven medical diagnostics improve patient care and disease prevention.</li>
+                                        <li>Automated wellness features promote healthier lifestyles through personalized insights.</li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <strong>Future-Ready Innovation</strong>
+                                    <ul>
+                                        <li>Smart systems pave the way for Al-driven advancements in various industries.</li>
+                                        <li>Businesses and individuals stay competitive in an increasingly tech-centric world.</li>
+                                        <li>Continuous updates and integrations ensure adaptability to evolving needs.</li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <strong>Final Thoughts</strong>
+                                    <p>Smart systems transform the way we work, live, and interact with technology. From homes to businesses, their ability to automate, optimize, and enhance efficiency makes them invaluable for the modern world. Embracing smart technology means stepping into a future of convenience, security, and innovation.</p>
+                                </li>
+                            </ol>
                         </div>
                         <div className="projects-section">
                             <h2>Check out our work!</h2>
-                            <div className="projects-slideshow smart-systems-projects">
+                            <div className="projects-slideshow mobile-projects">
                                 {projects.smart_systems.map(project => (
                                     <div key={project.id} className="project-item" onClick={() => handleProjectClick(project.id)}>
                                         <img src={project.image} alt={project.name} />
@@ -216,17 +403,21 @@ function Services() {
             case 'websites':
                 return (
                     <div className="services-banner websites-banner">
-                        <h1>Websites Banner Title</h1>
-                        <p>Websites banner subtitle.</p>
-                        <button className="btn">Get a Website</button>
+                        <div className='banner-content'>
+                            <h1><b>Customize Yours Now!</b></h1>
+                            <p>Innovate, Integrate, Inspire: Your Software Solutions Partner.</p>
+                            <button className="btn">Let's Talk!</button>
+                        </div>
                     </div>
                 );
             case 'smart_systems':
                 return (
                     <div className="services-banner smart-systems-banner">
-                        <h1>Smart Systems Banner Title</h1>
-                        <p>Smart Systems banner subtitle.</p>
-                        <button className="btn">Learn About Smart Systems</button>
+                        <div className='banner-content'>
+                            <h1><b>Build</b> Your <br /> Home <b>Smart</b></h1>
+                            <p>Innovate, Integrate, Inspire: Your Software Solutions Partner.</p>
+                            <button className="btn">Let's Talk!</button>
+                        </div>
                     </div>
                 );
             default:

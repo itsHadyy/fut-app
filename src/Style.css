@@ -773,12 +773,12 @@ ol ul{
 }
 
 .services-banner.websites-banner {
-    background-image: url('../public/media/Home/Frame\ 133.png');
+    background-image: url('../public/media/Services/Websites/Asset\ 7@300x.png');
     /* Placeholder */
 }
 
 .services-banner.smart-systems-banner {
-    background-image: url('../public/media/Home/Frame\ 133.png');
+    background-image: url('../public/media/Services/Systems/Artboard\ 1@4x.png');
     /* Placeholder */
 }
 
@@ -828,7 +828,7 @@ ol ul{
 
 .services-intro h2 {
     color: var(--black);
-    font-size: 36px;
+    font-size: 32px;
     margin-bottom: 20px;
 }
 
