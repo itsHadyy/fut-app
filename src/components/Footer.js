@@ -1,20 +1,28 @@
 import { Link } from 'react-router-dom';
 import { FaInstagram, FaFacebook, FaLinkedin } from 'react-icons/fa';
 import { FaXTwitter } from "react-icons/fa6";
+import { useLocation } from 'react-router-dom';
 
 function Footer() {
+    const location = useLocation();
+    const isContactPage = location.pathname === '/contact';
+
     return (
         <div className="footer-container">
-            <h2>Get started with a new way of customer relation</h2>
+            {!isContactPage && (
+                <h2>Get started with a new way of customer relation</h2>
+            )}
             <footer>
-                <div className="footer-top">
-                    <div className="contact-form-container">
-                        <input type="text" placeholder="Your Name" />
-                        <input type="email" placeholder="E-mail" />
-                        <textarea placeholder="Type your message..."></textarea>
-                        <button className="send-message-btn">Send Message</button>
+                {!isContactPage && (
+                    <div className="footer-top">
+                        <div className="contact-form-container">
+                            <input type="text" placeholder="Your Name" />
+                            <input type="email" placeholder="E-mail" />
+                            <textarea placeholder="Type your message..."></textarea>
+                            <button className="send-message-btn">Send Message</button>
+                        </div>
                     </div>
-                </div>
+                )}
                 <div className="footer-bottom">
                     <div className="footer-info">
                         <p>

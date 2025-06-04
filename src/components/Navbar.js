@@ -56,7 +56,9 @@ function Navbar() {
             </div>
 
             <div>
-                <button className="btn">Contact Us <img src="media/assets/arrow.png" alt="arrow" /></button>
+                <Link to='/contact'>
+                    <button className="btn">Contact Us <img src="media/assets/arrow.png" alt="arrow" /></button>
+                </Link>
             </div>
         </header>
     )
