@@ -636,8 +636,7 @@ footer {
     font-weight: 900;
 }
 
-.services-page {
-}
+.services-page {}
 
 .service-buttons {
     display: flex;
@@ -689,7 +688,7 @@ footer {
     margin-bottom: 20px;
 }
 
-ol ul{
+ol ul {
     padding: 10px;
 }
 
@@ -772,6 +771,14 @@ ol ul{
     /* Use the same image as the home banner for now */
 }
 
+.mobile-banner02 {
+    background-image: url('../public/media/Portfolio/Mobile/Portfolio.png');
+}
+
+.websites-banner02 {
+    background-image: url('../public/media/Portfolio/Websites/Portfolio.png');
+}
+
 .services-banner.websites-banner {
     background-image: url('../public/media/Services/Websites/Asset\ 7@300x.png');
     /* Placeholder */
@@ -801,7 +808,6 @@ ol ul{
 .services-intro-content {
     flex-grow: 0;
     width: 63%;
-    z-index: -1;
     background-color: var(--white);
     padding: 40px;
     border-radius: 15px;
@@ -836,10 +842,12 @@ ol ul{
     color: var(--black);
 }
 
-.services-intro a {
+.services-intro p a {
     color: var(--blue);
     text-decoration: underline;
     font-size: 20px;
+    cursor: pointer !important;
+    z-index: 9999;
 }
 
 .services-intro p {
@@ -903,6 +911,65 @@ ol ul{
     scrollbar-width: none;
 }
 
-.smart-projects img{
+.smart-projects img {
     width: 120px;
+}
+
+.projects-list {
+    display: grid;
+    /* Use grid for project items */
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    /* Responsive grid */
+    gap: 30px;
+    /* Gap between project items */
+    padding: 20px 0;
+}
+
+.project-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 0;
+    /* Remove padding */
+    z-index: 1;
+    /* Ensure project items are above other elements if needed */
+    background-color: var(--white);
+    /* Add background for clarity */
+    border-radius: 10px;
+    /* Add some border radius */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    /* Add subtle shadow */
+    overflow: hidden;
+    /* Hide overflowing parts of the image */
+}
+
+.project-item:hover {
+    transform: translateY(-5px);
+    /* Add a slight hover effect */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    /* Enhance shadow on hover */
+}
+
+.project-item img {
+    width: 100%;
+    height: 200px;
+    /* Set a fixed height for images */
+    object-fit: cover;
+    /* Cover the area, cropping if necessary */
+    border-bottom: 1px solid var(--lightGray);
+    /* Separator between image and text */
+}
+
+.project-item p {
+    color: var(--blue);
+    font-size: 18px;
+    text-align: center;
+    margin: 15px 0;
+    /* Add margin */
+    padding: 0 10px;
+    /* Add padding */
+    width: 100%;
+    /* Ensure paragraph takes full width */
 }
