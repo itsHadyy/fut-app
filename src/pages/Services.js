@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom'; // Assuming you are using React Router v6
 
+import { Link } from "react-router-dom";
+
 function Services() {
     const [activeService, setActiveService] = useState('mobile');
     const navigate = useNavigate(); // Initialize navigate hook
@@ -16,14 +18,14 @@ function Services() {
             { id: 6, name: 'Vinde', image: 'media/Portfolio/Mobile/vinde.png' },
         ],
         websites: [
-            { id: 5, name: 'Website Project 1', image: 'placeholder.png' },
-            { id: 6, name: 'Website Project 2', image: 'placeholder.png' },
-            // Add more website projects here
+            { id: 7, name: 'Arab Dairy Website', image: 'media/Portfolio/Websites/Arab Dairy.png' },
+            { id: 8, name: 'Orange Website', image: 'media/Portfolio/Websites/Orange.png' },
+            { id: 9, name: 'Pioneers Webite', image: 'media/Portfolio/Websites/Pioneers.png' },
         ],
         smart_systems: [
-            { id: 7, name: 'Smart System Project 1', image: 'placeholder.png' },
-            { id: 8, name: 'Smart System Project 2', image: 'placeholder.png' },
-            // Add more smart system projects here
+            { id: 10, name: 'Smart Gates', image: 'media/Services/Systems/smart.png' },
+            { id: 11, name: 'Smart Mirrors', image: 'media/Services/Systems/smart.png' },
+            { id: 12, name: 'Smart Locks', image: 'media/Services/Systems/smart.png' },
         ],
     };
 
@@ -49,7 +51,7 @@ function Services() {
                                     functionality, we bring your ideas to life with precision and expertise.
                                 </p>
                                 <p>Don't just adapt—<strong>innovate!</strong> Let's build something extraordinary together.</p>
-                                <p><a href="#">Contact us today and take your mobile experience to the next level!</a></p>
+                                <p><Link to="/contact">Contact us today and take your mobile experience to the next level!</Link></p>
                             </div>
                             <img src="media/Services/Mobile/Robot Hand right.png" alt="Robot arm right" className="services-intro-image right-image" />
                         </div>
@@ -167,7 +169,7 @@ function Services() {
                                     Your website is your digital storefront—make it work for you! Our expert developers craft responsive, visually captivating, and high-speed websites tailored to your business needs. Whether it's an e-commerce platform, corporate site, or custom web solution, we bring innovative designs and seamless functionality to life.
                                 </p>
                                 <p>Let's create an <strong>online experience </strong>that converts visitors into <strong>loyal customers.</strong></p>
-                                <p><a href="#">Contact us today and take your web presence to the next level!</a></p>
+                                <p><Link to="/contact">Contact us today and take your web presence to the next level!</Link></p>
                             </div>
                             <img src="media/Services/Mobile/Robot Hand right.png" alt="Robot arm right" className="services-intro-image right-image" />
                         </div>
@@ -276,7 +278,7 @@ function Services() {
                                 <p>
                                     Stay ahead of the competition with cutting-edge smart systems designed to automate, optimize, and elevate your operations. From Al-driven solutions to IoT integrations, our advanced technology streamlines workflows, enhances efficiency, and drives innovation. Whether it's smart security, automation, or data-driven intelligence, we craft systems that adapt to your needs.
                                 </p>
-                                <p>Step into the future today!<br /> <a href="#">Contact us to develop smart solutions that transform your business.</a></p>
+                                <p>Step into the future today!<br /> <Link to="/contact">Contact us to develop smart solutions that transform your business.</Link></p>
                             </div>
                             <img src="media/Services/Mobile/Robot Hand right.png" alt="Robot arm right" className="services-intro-image right-image" />
                         </div>
@@ -372,7 +374,7 @@ function Services() {
                         </div>
                         <div className="projects-section">
                             <h2>Check out our work!</h2>
-                            <div className="projects-slideshow mobile-projects">
+                            <div className="projects-slideshow smart-projects">
                                 {projects.smart_systems.map(project => (
                                     <div key={project.id} className="project-item" onClick={() => handleProjectClick(project.id)}>
                                         <img src={project.image} alt={project.name} />

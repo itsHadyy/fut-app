@@ -902,3 +902,7 @@ ol ul{
     -ms-overflow-style: none;
     scrollbar-width: none;
 }
+
+.smart-projects img{
+    width: 120px;
+}
