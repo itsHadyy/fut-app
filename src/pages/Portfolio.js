@@ -9,7 +9,13 @@ function Portfolio() {
 
     const projects = {
         mobile: [
-            { id: 1, name: 'PRE Developments', image: 'media/Portfolio/Mobile/PRE.png' },
+            {
+                id: 1,
+                name: 'PRE Developments',
+                category: 'Community Application',
+                description: 'The Community Mobile Application is your one-stop solution for seamless living in your residential compound. This app connects residents to essential services, events, and each other. Enjoy features like facility booking, maintenance requests, community announcements, and exclusive deals from nearby businesses—all at your fingertips. Stay informed, engaged, and effortlessly manage your daily needs within the community.',
+                image: 'media/Portfolio/Mobile/PRE.png'
+            },
             { id: 2, name: 'JDAR Developments', image: 'media/Portfolio/Mobile/JDAR.png' },
             { id: 3, name: 'al ahly sabour Developments', image: 'media/Portfolio/Mobile/ahly.png' },
             { id: 4, name: 'Buzz Mobility', image: 'media/Portfolio/Mobile/Buzz.png' },
