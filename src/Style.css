@@ -915,12 +915,7 @@ ol ul {
     width: 120px;
 }
 
-.projects-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 30px;
-    padding: 20px 0;
-}
+
 
 .project-item {
     display: flex;
@@ -946,3 +941,26 @@ ol ul {
     padding: 0 10px;
     width: 100%;
 }
+
+.projects-list{
+    display: flex;
+    gap: 60px;
+    flex-direction: column;
+}
+
+.projects-list .flex{
+    text-align: left;
+    margin: 0;
+}
+.projects-list .flex h2{
+    margin: 0;
+}
+.projects-list .flex span{
+    font-size: 14px;
+}
+
+.left{
+    flex-direction: row-reverse;
+}
+
+
