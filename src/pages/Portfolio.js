@@ -110,7 +110,7 @@ function Portfolio() {
                                                 <span className="btn">iOS</span>
                                                 <span className="btn">Mobile</span>
                                             </div>
-                                            <Link to="/">View Projects <img src="media/assets/arrow02.png" alt="arrow" /></Link>
+                                            <Link to={`/projects/${project.id}`}>View Project <img src="media/assets/arrow02.png" alt="arrow" /></Link>
                                         </div>
 
                                         <div className="flex-img">
@@ -139,7 +139,7 @@ function Portfolio() {
                                                 <span className="btn">MacOS</span>
                                                 <span className="btn">PC</span>
                                             </div>
-                                            <Link to="/">View Projects <img src="media/assets/arrow02.png" alt="arrow" /></Link>
+                                            <Link to={`/projects/${project.id}`}>View Project <img src="media/assets/arrow02.png" alt="arrow" /></Link>
                                         </div>
 
                                         <div className="flex-img">

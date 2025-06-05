@@ -10,6 +10,7 @@ import Services from './pages/Services';
 import Portfolio from './pages/Portfolio';
 import Products from './pages/Products';
 import Contact from './pages/Contact';
+import ProjectDetails from './pages/ProjectDetails';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
           <Route path="/products" element={<Products />} />
           <Route path="/services" element={<Services />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/projects/:projectId" element={<ProjectDetails />} />
         </Routes>
         <Footer />
       </Router>
