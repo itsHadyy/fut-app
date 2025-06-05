@@ -1168,3 +1168,199 @@ ol ul {
     font-size: 48px;
     margin-bottom: 30px;
 }
+
+.loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: var(--white);
+}
+
+.loading h1 {
+    color: var(--blue);
+    font-size: 32px;
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        opacity: 0.6;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0.6;
+    }
+}
+
+.admin-dashboard {
+    padding: 40px 100px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.admin-dashboard h1 {
+    font-size: 48px;
+    margin-bottom: 40px;
+    color: var(--blue);
+}
+
+.project-form {
+    background-color: var(--white);
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    margin-bottom: 60px;
+}
+
+.project-form h2 {
+    font-size: 32px;
+    margin-bottom: 30px;
+    color: var(--blue);
+}
+
+.form-group {
+    margin-bottom: 25px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 18px;
+    color: var(--gray);
+}
+
+.form-group input[type="text"],
+.form-group textarea,
+.form-group select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--lightGray);
+    border-radius: 10px;
+    font-size: 16px;
+    color: var(--black);
+}
+
+.form-group textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+.array-input-group {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.array-input-group input {
+    flex: 1;
+}
+
+.array-input-group button {
+    padding: 8px 15px;
+    background-color: #ff4444;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.form-group button[type="button"] {
+    padding: 8px 15px;
+    background-color: var(--blue);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.submit-btn {
+    background: linear-gradient(to right, var(--darkBlue), var(--blue));
+    color: var(--white);
+    padding: 15px 40px;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    font-size: 18px;
+    margin-top: 30px;
+    transition: background 0.3s ease;
+}
+
+.submit-btn:hover {
+    background: linear-gradient(to right, #3a3b8a, #5b9de9);
+}
+
+.projects-list {
+    margin-top: 60px;
+}
+
+.projects-list h2 {
+    font-size: 32px;
+    margin-bottom: 30px;
+    color: var(--blue);
+}
+
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.project-card {
+    background-color: var(--white);
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.project-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.project-card h3 {
+    font-size: 24px;
+    margin: 20px;
+    color: var(--blue);
+}
+
+.project-card p {
+    font-size: 16px;
+    color: var(--gray);
+    margin: 0 20px 20px;
+}
+
+.project-actions {
+    display: flex;
+    gap: 10px;
+    padding: 20px;
+    border-top: 1px solid var(--lightGray);
+}
+
+.project-actions button {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.project-actions button:first-child {
+    background-color: var(--blue);
+    color: white;
+}
+
+.project-actions button:last-child {
+    background-color: #ff4444;
+    color: white;
+}
+
+.project-actions button:hover {
+    opacity: 0.9;
+}

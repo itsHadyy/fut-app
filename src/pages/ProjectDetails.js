@@ -1,16 +1,18 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 
 function ProjectDetails() {
     const { projectId } = useParams();
     const navigate = useNavigate();
+    const [project, setProject] = useState(null);
+    const [loading, setLoading] = useState(true);
 
-    // This would typically come from an API or database
+    // This would typically come from Firestore
     const projects = {
         mobile: [
             {
                 id: 1,
-                banner: '',
+                banner: '../public/media/Portfolio/Mobile/pre/Banner.png',
                 name: 'PRE Developments',
                 intro: 'FutApp is proud to introduce PRE Community, a cutting-edge community management application developed for PRE Developments. Designed to enhance security, convenience, and communication, PRE Community empowers residents with seamless gate access, visitor management, service bookings, and bill payments—all in one app.',
                 category: 'Community Application',
@@ -31,6 +33,7 @@ function ProjectDetails() {
         websites: [
             {
                 id: 6,
+                banner: 'media/Portfolio/Websites/arab-dairy/banner.png',
                 name: 'Arab Dairy Website',
                 category: 'Shopping, Pharmaceuticals',
                 description: "The Community Mobile Application is your one-stop solution for seamless living in your residential compound. This app connects residents to essential services, events, and each other. Enjoy features like facility booking, maintenance requests, community announcements, and exclusive deals from nearby businesses—all at your fingertips. Stay informed, engaged, and effortlessly manage your daily needs within the community.",
@@ -45,12 +48,33 @@ function ProjectDetails() {
                 technologies: ['React', 'Node.js', 'MongoDB'],
                 platforms: ['Web']
             },
-            // ... other website projects
         ]
     };
 
-    // Find the project in both mobile and websites arrays
-    const project = [...projects.mobile, ...projects.websites].find(p => p.id === parseInt(projectId));
+    useEffect(() => {
+        // Simulate fetching data from Firestore
+        const fetchProject = async () => {
+            try {
+                // In the future, this will be replaced with actual Firestore query
+                const foundProject = [...projects.mobile, ...projects.websites].find(p => p.id === parseInt(projectId));
+                setProject(foundProject);
+            } catch (error) {
+                console.error('Error fetching project:', error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchProject();
+    }, [projectId]);
+
+    if (loading) {
+        return (
+            <div className="loading">
+                <h1>Loading...</h1>
+            </div>
+        );
+    }
 
     if (!project) {
         return (
@@ -63,13 +87,17 @@ function ProjectDetails() {
 
     return (
         <div className="project-details">
-            <div className="project-header">
-                <button onClick={() => navigate('/portfolio')} className="back-btn">
-                    <img src="media/assets/arrow02.png" alt="back" style={{ transform: 'rotate(180deg)' }} />
-                    Back to Portfolio
-                </button>
-                <h1>{project.name}</h1>
-                <span className="category">{project.category}</span>
+            <div
+                className="services-banner"
+                style={{
+                    backgroundImage: `url(${project.banner})`
+                }}
+            >
+                <div className='banner-content'>
+                    <h1>{project.name}</h1>
+                    <p>{project.intro}</p>
+                    <button className="btn">Let's Talk!</button>
+                </div>
             </div>
 
             <div className="project-content">
@@ -83,32 +111,38 @@ function ProjectDetails() {
                         <p>{project.description}</p>
                     </div>
 
-                    <div className="features">
-                        <h2>Key Features</h2>
-                        <ul>
-                            {project.features?.map((feature, index) => (
-                                <li key={index}>{feature}</li>
-                            ))}
-                        </ul>
-                    </div>
-
-                    <div className="technologies">
-                        <h2>Technologies Used</h2>
-                        <div className="tech-tags">
-                            {project.technologies?.map((tech, index) => (
-                                <span key={index} className="tech-tag">{tech}</span>
-                            ))}
+                    {project.features && (
+                        <div className="features">
+                            <h2>Key Features</h2>
+                            <ul>
+                                {project.features.map((feature, index) => (
+                                    <li key={index}>{feature}</li>
+                                ))}
+                            </ul>
                         </div>
-                    </div>
+                    )}
 
-                    <div className="platforms">
-                        <h2>Available Platforms</h2>
-                        <div className="platform-tags">
-                            {project.platforms?.map((platform, index) => (
-                                <span key={index} className="platform-tag">{platform}</span>
-                            ))}
+                    {project.technologies && (
+                        <div className="technologies">
+                            <h2>Technologies Used</h2>
+                            <div className="tech-tags">
+                                {project.technologies.map((tech, index) => (
+                                    <span key={index} className="tech-tag">{tech}</span>
+                                ))}
+                            </div>
                         </div>
-                    </div>
+                    )}
+
+                    {project.platforms && (
+                        <div className="platforms">
+                            <h2>Available Platforms</h2>
+                            <div className="platform-tags">
+                                {project.platforms.map((platform, index) => (
+                                    <span key={index} className="platform-tag">{platform}</span>
+                                ))}
+                            </div>
+                        </div>
+                    )}
                 </div>
             </div>
         </div>
