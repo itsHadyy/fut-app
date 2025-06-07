@@ -2,23 +2,43 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Link } from "react-router-dom";
 import { collection, getDocs, query, where } from "firebase/firestore";
-import { db } from '../firebaseConfig'; // Import db
+import { db } from '../firebaseConfig';
 
 function Products() {
     const [activeService, setActiveService] = useState('mobile');
-    const navigate = useNavigate(); // Keep navigate although not directly used for Link for consistency
-    const [projects, setProjects] = useState([]);
+    const navigate = useNavigate();
+    const [projects, setProjects] = useState({
+        mobile: [],
+        websites: []
+    });
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
     useEffect(() => {
         const fetchProjects = async () => {
             try {
-                // Query for visible projects
-                const q = query(collection(db, "projects"), where("visible", "==", true));
+                // Query for visible product projects
+                const q = query(
+                    collection(db, "projects"),
+                    where("collection", "==", "products"),
+                    where("visible", "==", true)
+                );
                 const querySnapshot = await getDocs(q);
-                const projectsList = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-                setProjects(projectsList);
+                const projectsData = {
+                    mobile: [],
+                    websites: []
+                };
+
+                querySnapshot.forEach((doc) => {
+                    const project = { id: doc.id, ...doc.data() };
+                    if (project.type === 'mobile') {
+                        projectsData.mobile.push(project);
+                    } else if (project.type === 'website') {
+                        projectsData.websites.push(project);
+                    }
+                });
+
+                setProjects(projectsData);
             } catch (err) {
                 console.error('Error fetching projects: ', err);
                 setError('Failed to load projects.');
@@ -28,43 +48,27 @@ function Products() {
         };
 
         fetchProjects();
-    }, [db]); // db is stable, but added for completeness
-
-    // Filter projects based on activeService
-    const filteredProjects = projects.filter(project => {
-        if (!project.platforms || project.platforms.length === 0) return false; // Ensure platforms exist
-
-        const lowerCasePlatforms = project.platforms.map(p => p.toLowerCase());
-
-        if (activeService === 'mobile') {
-            return lowerCasePlatforms.includes('android') || lowerCasePlatforms.includes('ios') || lowerCasePlatforms.includes('mobile');
-        } else if (activeService === 'websites') {
-            return lowerCasePlatforms.includes('web') || lowerCasePlatforms.includes('windows') || lowerCasePlatforms.includes('macos') || lowerCasePlatforms.includes('pc');
-        }
-        return false; // Should not happen with current buttons, but safe default
-    });
+    }, []);
 
     const renderContent = () => {
         if (loading) {
-            return <div>Loading projects...</div>;
+            return <div className="loading">Loading projects...</div>;
         }
 
         if (error) {
-            return <div>Error: {error}</div>;
+            return <div className="error">{error}</div>;
         }
 
-        // Show message only if no projects found after filtering
-        if (projects.length > 0 && filteredProjects.length === 0) {
-            return <div>No projects found for this category.</div>;
-        }
-        if (projects.length === 0 && !loading) {
-            return <div>No projects added yet.</div>; // Message if no projects in DB at all
+        const currentProjects = activeService === 'mobile' ? projects.mobile : projects.websites;
+
+        if (currentProjects.length === 0) {
+            return <div className="no-projects">No products found for this category.</div>;
         }
 
         return (
             <div className="projects-section">
                 <div className="projects-list">
-                    {filteredProjects.map(project => (
+                    {currentProjects.map(project => (
                         <div key={project.id} className={project.align || 'flex'}>
                             <div>
                                 <h2>{project.name}</h2>
@@ -79,7 +83,9 @@ function Products() {
                                     </div>
                                 )}
 
-                                <Link to={`/projects/${project.id}`}>View Project <img src="media/assets/arrow02.png" alt="arrow" /></Link>
+                                <Link to={`/projects/${project.id}`}>
+                                    View Product <img src="media/assets/arrow02.png" alt="arrow" />
+                                </Link>
                             </div>
 
                             <div className="flex-img">

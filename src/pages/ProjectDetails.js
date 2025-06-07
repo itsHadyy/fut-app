@@ -35,7 +35,7 @@ function ProjectDetails() {
                 id: 6,
                 banner: 'media/Portfolio/Websites/arab-dairy/banner.png',
                 name: 'Arab Dairy Website',
-                category: 'Shopping, Pharmaceuticals',
+                category: 'Website',
                 description: "The Community Mobile Application is your one-stop solution for seamless living in your residential compound. This app connects residents to essential services, events, and each other. Enjoy features like facility booking, maintenance requests, community announcements, and exclusive deals from nearby businesses—all at your fingertips. Stay informed, engaged, and effortlessly manage your daily needs within the community.",
                 image: 'media/Portfolio/Websites/Arab Dairy.png',
                 features: [
@@ -71,7 +71,7 @@ function ProjectDetails() {
     if (loading) {
         return (
             <div className="loading">
-                <h1>Loading...</h1>
+                <h1>Loading Project Details...</h1>
             </div>
         );
     }
@@ -80,24 +80,21 @@ function ProjectDetails() {
         return (
             <div className="project-not-found">
                 <h1>Project Not Found</h1>
-                <button onClick={() => navigate('/portfolio')} className="btn">Back to Portfolio</button>
+                <button onClick={() => navigate('/portfolio')} className="btn">
+                    <span>←</span> Back to Portfolio
+                </button>
             </div>
         );
     }
 
     return (
         <div className="project-details">
-            <div
-                className="services-banner"
-                style={{
-                    backgroundImage: `url(${project.banner})`
-                }}
-            >
-                <div className='banner-content'>
-                    <h1>{project.name}</h1>
-                    <p>{project.intro}</p>
-                    <button className="btn">Let's Talk!</button>
-                </div>
+            <div className="project-header">
+                <button onClick={() => navigate('/portfolio')} className="back-btn">
+                    <span>←</span> Back to Portfolio
+                </button>
+                <h1>{project.name}</h1>
+                <span className="category">{project.category}</span>
             </div>
 
             <div className="project-content">
