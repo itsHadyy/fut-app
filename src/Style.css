@@ -1270,7 +1270,7 @@ ol ul {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
+    height: 10vh;
     background-color: var(--white);
 }
 
@@ -1392,10 +1392,6 @@ ol ul {
 
 .submit-btn:hover {
     background: linear-gradient(to right, #3a3b8a, #5b9de9);
-}
-
-.projects-list {
-    margin-top: 60px;
 }
 
 .projects-list h2 {

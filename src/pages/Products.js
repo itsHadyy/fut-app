@@ -69,7 +69,7 @@ function Products() {
             <div className="projects-section">
                 <div className="projects-list">
                     {currentProjects.map(project => (
-                        <div key={project.id} className={project.align || 'flex'}>
+                        <div key={project.id} className={`flex ${project.align === 'right' ? 'right' : 'left'}`}>
                             <div>
                                 <h2>{project.name}</h2>
                                 <span>{project.category}</span>

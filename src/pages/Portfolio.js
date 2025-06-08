@@ -69,7 +69,7 @@ function Portfolio() {
             <div className="projects-section">
                 <div className="projects-list">
                     {currentProjects.map(project => (
-                        <div key={project.id} className={project.align || 'flex'}>
+                        <div key={project.id} className={`flex ${project.align === 'right' ? 'right' : 'left'}`}>
                             <div>
                                 <h2>{project.name}</h2>
                                 <span>{project.category}</span>
@@ -89,7 +89,7 @@ function Portfolio() {
                             </div>
 
                             <div className="flex-img">
-                                <img src={project.image} alt={project.name} />
+                                <img src={'media/Portfolio/Mobile/PRE.png' || project.image} alt={project.name} />
                             </div>
                         </div>
                     ))}

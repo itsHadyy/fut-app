@@ -6,34 +6,10 @@ import './AdminStyles.css'; // Import admin specific styles
 function AdminDashboard() {
     const [activeTab, setActiveTab] = useState('portfolio'); // 'portfolio' or 'products'
     const [activeType, setActiveType] = useState('mobile'); // 'mobile' or 'websites'
-    const [name, setName] = useState('');
-    const [category, setCategory] = useState('');
-    const [description, setDescription] = useState('');
-    const [intro, setIntro] = useState('');
-    
-    // Images
-    const [homeImage, setHomeImage] = useState('');
-    const [bannerImage, setBannerImage] = useState('');
-    const [projectImages, setProjectImages] = useState([]);
-    const [newImageUrl, setNewImageUrl] = useState('');
-    const [imageAlignment, setImageAlignment] = useState('right');
-    
-    // Technologies and Features
-    const [technologies, setTechnologies] = useState([]);
-    const [newTech, setNewTech] = useState('');
-    const [features, setFeatures] = useState([]);
-    const [newFeatureTitle, setNewFeatureTitle] = useState('');
-    const [newFeatureDesc, setNewFeatureDesc] = useState('');
-    
-    // Colors
-    const [primaryColor, setPrimaryColor] = useState('#4D92CE');
-    const [secondaryColor, setSecondaryColor] = useState('#2D2E75');
-    const [accentColor, setAccentColor] = useState('#8548FB');
 
     const [loading, setLoading] = useState(true);
     const [successMessage, setSuccessMessage] = useState(null);
     const [errorMessage, setErrorMessage] = useState(null);
-    const [error, setError] = useState(null); // Add error state
 
     const [projectsList, setProjectsList] = useState([]); // State to hold the list of projects
     const [listLoading, setListLoading] = useState(false); // Loading state for the list
@@ -41,38 +17,34 @@ function AdminDashboard() {
     const [isAddingProject, setIsAddingProject] = useState(false); // State for modal visibility
     const [editingProject, setEditingProject] = useState(null); // State to hold project being edited
 
-    // Input states for dynamic fields
-    const [newProjectImage, setNewProjectImage] = useState('');
-    const [newTechnology, setNewTechnology] = useState('');
-    const [newFeatureDescription, setNewFeatureDescription] = useState('');
-
-    const [projects, setProjects] = useState({
-        portfolio: { mobile: [], websites: [] },
-        products: { mobile: [], websites: [] }
-    });
-    const [showForm, setShowForm] = useState(false);
     const [formData, setFormData] = useState({
         name: '',
         category: '',
         description: '',
-        image: 'https://via.placeholder.com/400x250?text=Project+Image', // Dummy image
-        banner: 'https://via.placeholder.com/1200x400?text=Banner+Image', // Dummy banner
+        intro: '', 
+        image: 'https://via.placeholder.com/400x250?text=Project+Image', 
+        banner: 'https://via.placeholder.com/1200x400?text=Banner+Image', 
+        projectImages: [], 
+        primaryColor: '#4D92CE', 
+        secondaryColor: '#2D2E75', 
+        accentColor: '#8548FB', 
         features: [],
         technologies: [],
         platforms: [],
         type: 'mobile',
         collection: 'portfolio',
         visible: true,
-        status: 'draft' // New field to track project status
+        status: 'draft', 
+        align: 'left' 
     });
     const [newFeature, setNewFeature] = useState({ title: '', description: '' });
+    const [newTech, setNewTech] = useState('');
     const [newPlatform, setNewPlatform] = useState('');
+    const [newProjectImageUrl, setNewProjectImageUrl] = useState(''); 
 
-    // Add new state for preview
     const [previewMode, setPreviewMode] = useState(false);
     const [previewCollection, setPreviewCollection] = useState('portfolio');
 
-    // Add validation state
     const [validationErrors, setValidationErrors] = useState({});
 
     const fetchProjects = useCallback(async () => {
@@ -92,7 +64,6 @@ function AdminDashboard() {
                 projectsData[collection][type === 'mobile' ? 'mobile' : 'websites'].push(project);
             });
 
-            setProjects(projectsData);
             setProjectsList(projectsData[activeTab][activeType]);
             setLoading(false);
         } catch (error) {
@@ -108,41 +79,72 @@ function AdminDashboard() {
         fetchProjects();
     }, [fetchProjects]);
 
-    const handleAddTechnology = () => {
+    const addFeature = () => {
+        if (newFeature.title.trim() && newFeature.description.trim()) {
+            setFormData(prev => ({
+                ...prev,
+                features: [...prev.features, newFeature]
+            }));
+            setNewFeature({ title: '', description: '' });
+        }
+    };
+
+    const removeFeature = (index) => {
+        setFormData(prev => ({
+            ...prev,
+            features: prev.features.filter((_, i) => i !== index)
+        }));
+    };
+
+    const addTech = () => {
         if (newTech.trim()) {
-            setTechnologies([...technologies, newTech.trim()]);
+            setFormData(prev => ({
+                ...prev,
+                technologies: [...prev.technologies, newTech.trim()]
+            }));
             setNewTech('');
         }
     };
 
-    const handleRemoveTechnology = (index) => {
-        setTechnologies(technologies.filter((_, i) => i !== index));
+    const removeTech = (index) => {
+        setFormData(prev => ({
+            ...prev,
+            technologies: prev.technologies.filter((_, i) => i !== index)
+        }));
     };
 
-    const handleAddFeature = () => {
-        if (newFeatureTitle.trim() && newFeatureDesc.trim()) {
-            setFeatures([...features, {
-                title: newFeatureTitle.trim(),
-                description: newFeatureDesc.trim()
-            }]);
-            setNewFeatureTitle('');
-            setNewFeatureDesc('');
+    const addPlatform = () => {
+        if (newPlatform.trim()) {
+            setFormData(prev => ({
+                ...prev,
+                platforms: [...prev.platforms, newPlatform.trim()]
+            }));
+            setNewPlatform('');
         }
     };
 
-    const handleRemoveFeature = (index) => {
-        setFeatures(features.filter((_, i) => i !== index));
+    const removePlatform = (index) => {
+        setFormData(prev => ({
+            ...prev,
+            platforms: prev.platforms.filter((_, i) => i !== index)
+        }));
     };
 
-    const handleAddProjectImage = () => {
-        if (newImageUrl.trim()) {
-            setProjectImages([...projectImages, newImageUrl.trim()]);
-            setNewImageUrl('');
+    const addProjectImage = () => {
+        if (newProjectImageUrl.trim()) {
+            setFormData(prev => ({
+                ...prev,
+                projectImages: [...prev.projectImages, newProjectImageUrl.trim()]
+            }));
+            setNewProjectImageUrl('');
         }
     };
 
-    const handleRemoveProjectImage = (index) => {
-        setProjectImages(projectImages.filter((_, i) => i !== index));
+    const removeProjectImage = (index) => {
+        setFormData(prev => ({
+            ...prev,
+            projectImages: prev.projectImages.filter((_, i) => i !== index)
+        }));
     };
 
     const validateForm = () => {
@@ -151,6 +153,10 @@ function AdminDashboard() {
         if (!formData.category) errors.category = 'Category is required';
         if (!formData.description) errors.description = 'Description is required';
         if (!formData.image) errors.image = 'Main image is required';
+        if (!formData.intro) errors.intro = 'Introduction is required'; 
+        if (!formData.primaryColor) errors.primaryColor = 'Primary Color is required'; 
+        if (!formData.secondaryColor) errors.secondaryColor = 'Secondary Color is required'; 
+        if (!formData.accentColor) errors.accentColor = 'Accent Color is required'; 
         if (formData.features.length === 0) errors.features = 'At least one feature is required';
         if (formData.technologies.length === 0) errors.technologies = 'At least one technology is required';
         setValidationErrors(errors);
@@ -163,15 +169,21 @@ function AdminDashboard() {
             name: project.name,
             category: project.category,
             description: project.description,
-            image: project.image || 'https://via.placeholder.com/400x250?text=Project+Image', // Fallback to dummy
-            banner: project.banner || 'https://via.placeholder.com/1200x400?text=Banner+Image', // Fallback to dummy
+            intro: project.intro || '', 
+            image: project.image || 'https://via.placeholder.com/400x250?text=Project+Image', 
+            banner: project.banner || 'https://via.placeholder.com/1200x400?text=Banner+Image', 
+            projectImages: project.projectImages || [], 
+            primaryColor: project.primaryColor || '#4D92CE', 
+            secondaryColor: project.secondaryColor || '#2D2E75', 
+            accentColor: project.accentColor || '#8548FB', 
             features: project.features || [],
             technologies: project.technologies || [],
             platforms: project.platforms || [],
             type: project.type,
             collection: project.collection,
             visible: project.visible,
-            status: project.status || 'draft'
+            status: project.status || 'draft',
+            align: project.align || 'left' 
         });
         setIsAddingProject(true);
     };
@@ -198,7 +210,6 @@ function AdminDashboard() {
         setLoading(true);
         setSuccessMessage(null);
         setErrorMessage(null);
-        setError(null);
 
         try {
             const projectData = {
@@ -207,36 +218,38 @@ function AdminDashboard() {
             };
 
             if (editingProject) {
-                // Update existing project
                 const projectRef = doc(db, 'projects', editingProject.id);
                 await updateDoc(projectRef, projectData);
                 setSuccessMessage('Project updated successfully!');
             } else {
-                // Add new project
                 projectData.createdAt = new Date().toISOString();
                 await addDoc(collection(db, 'projects'), projectData);
                 setSuccessMessage('Project added successfully!');
             }
             
-            // Reset form and close it
             setFormData({
                 name: '',
                 category: '',
                 description: '',
-                image: 'https://via.placeholder.com/400x250?text=Project+Image', // Dummy image
-                banner: 'https://via.placeholder.com/1200x400?text=Banner+Image', // Dummy banner
+                intro: '', 
+                image: 'https://via.placeholder.com/400x250?text=Project+Image', 
+                banner: 'https://via.placeholder.com/1200x400?text=Banner+Image', 
+                projectImages: [], 
+                primaryColor: '#4D92CE', 
+                secondaryColor: '#2D2E75', 
+                accentColor: '#8548FB', 
                 features: [],
                 technologies: [],
                 platforms: [],
                 type: 'mobile',
                 collection: 'portfolio',
                 visible: true,
-                status: 'draft'
+                status: 'draft',
+                align: 'left' 
             });
             setIsAddingProject(false); 
-            setEditingProject(null); // Clear editing state
+            setEditingProject(null); 
             
-            // Refresh projects list
             await fetchProjects();
         } catch (error) {
             console.error(editingProject ? 'Error updating project:' : 'Error adding project:', error);
@@ -259,78 +272,6 @@ function AdminDashboard() {
         }
     };
 
-    const addFeature = () => {
-        if (newFeature.title && newFeature.description) {
-            setFormData({
-                ...formData,
-                features: [...formData.features, newFeature]
-            });
-            setNewFeature({ title: '', description: '' });
-        }
-    };
-
-    const removeFeature = (index) => {
-        setFormData({
-            ...formData,
-            features: formData.features.filter((_, i) => i !== index)
-        });
-    };
-
-    const addTech = () => {
-        if (newTech) {
-            setFormData({
-                ...formData,
-                technologies: [...formData.technologies, newTech]
-            });
-            setNewTech('');
-        }
-    };
-
-    const removeTech = (index) => {
-        setFormData({
-            ...formData,
-            technologies: formData.technologies.filter((_, i) => i !== index)
-        });
-    };
-
-    const addPlatform = () => {
-        if (newPlatform) {
-            setFormData({
-                ...formData,
-                platforms: [...formData.platforms, newPlatform]
-            });
-            setNewPlatform('');
-        }
-    };
-
-    const removePlatform = (index) => {
-        setFormData({
-            ...formData,
-            platforms: formData.platforms.filter((_, i) => i !== index)
-        });
-    };
-
-    const resetForm = () => {
-        setName('');
-        setCategory('');
-        setDescription('');
-        setIntro('');
-        setHomeImage('');
-        setBannerImage('');
-        setProjectImages([]);
-        setImageAlignment('right');
-        setTechnologies([]);
-        setFeatures([]);
-        setPrimaryColor('#4D92CE');
-        setSecondaryColor('#2D2E75');
-        setAccentColor('#8548FB');
-        setNewImageUrl('');
-        setNewTech('');
-        setNewFeatureTitle('');
-        setNewFeatureDesc('');
-    };
-
-    // Add preview component
     const renderPreview = () => {
         if (!previewMode) return null;
 
@@ -381,7 +322,6 @@ function AdminDashboard() {
         );
     };
 
-    // Modify the form JSX to include new improvements
     const renderForm = () => {
         if (!isAddingProject) return null;
 
@@ -439,6 +379,18 @@ function AdminDashboard() {
                                 placeholder="Enter project description"
                             />
                         </div>
+
+                        <div className="form-group">
+                            <label>
+                                Introduction *
+                                {validationErrors.intro && <span className="error">{validationErrors.intro}</span>}
+                            </label>
+                            <textarea
+                                value={formData.intro}
+                                onChange={(e) => setFormData({...formData, intro: e.target.value})}
+                                placeholder="Enter a brief introduction for the project"
+                            />
+                        </div>
                     </div>
 
                     <div className="form-section">
@@ -488,6 +440,47 @@ function AdminDashboard() {
                         </div>
 
                         <div className="form-group">
+                            <label>Alignment on Project List Page</label>
+                            <div className="radio-group">
+                                <label>
+                                    <input
+                                        type="radio"
+                                        name="alignment"
+                                        value="left"
+                                        checked={formData.align === 'left'}
+                                        onClick={() => {
+                                            console.log('Left clicked, current align:', formData.align);
+                                            setFormData(prev => {
+                                                console.log('Setting align to left');
+                                                return {...prev, align: 'left'};
+                                            });
+                                        }}
+                                    />
+                                    Left
+                                </label>
+                                <label>
+                                    <input
+                                        type="radio"
+                                        name="alignment"
+                                        value="right"
+                                        checked={formData.align === 'right'}
+                                        onClick={() => {
+                                            console.log('Right clicked, current align:', formData.align);
+                                            setFormData(prev => {
+                                                console.log('Setting align to right');
+                                                return {...prev, align: 'right'};
+                                            });
+                                        }}
+                                    />
+                                    Right
+                                </label>
+                            </div>
+                            <div style={{marginTop: '10px', color: '#666'}}>
+                                Current alignment: {formData.align}
+                            </div>
+                        </div>
+
+                        <div className="form-group">
                             <label>Visibility</label>
                             <div className="visibility-toggle">
                                 <label className="switch">
@@ -516,7 +509,7 @@ function AdminDashboard() {
                         </div>
                         <div className="form-group">
                             <label>
-                                Project Image URL *
+                                Main Project Image URL *
                                 {validationErrors.image && <span className="error">{validationErrors.image}</span>}
                             </label>
                             <input
@@ -525,6 +518,61 @@ function AdminDashboard() {
                                 onChange={(e) => setFormData({ ...formData, image: e.target.value })}
                                 placeholder="https://example.com/project.jpg"
                             />
+                        </div>
+
+                        <div className="form-group">
+                            <label>Additional Project Images</label>
+                            <div className="array-input-group">
+                                <input
+                                    type="url"
+                                    placeholder="Add image URL"
+                                    value={newProjectImageUrl}
+                                    onChange={(e) => setNewProjectImageUrl(e.target.value)}
+                                />
+                                <button type="button" onClick={addProjectImage}>Add</button>
+                            </div>
+                            <div className="tech-tags"> 
+                                {formData.projectImages.map((imgUrl, index) => (
+                                    <span key={index} className="tech-tag">
+                                        {imgUrl.substring(0, 30)}...
+                                        <button type="button" onClick={() => removeProjectImage(index)}>×</button>
+                                    </span>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="form-section">
+                        <h3>Colors *</h3>
+                        {validationErrors.primaryColor && <span className="error">{validationErrors.primaryColor}</span>}
+                        {validationErrors.secondaryColor && <span className="error">{validationErrors.secondaryColor}</span>}
+                        {validationErrors.accentColor && <span className="error">{validationErrors.accentColor}</span>}
+                        <div className="form-group">
+                            <label>Primary Color</label>
+                            <input
+                                type="color"
+                                value={formData.primaryColor}
+                                onChange={(e) => setFormData({...formData, primaryColor: e.target.value})}
+                            />
+                            <span>{formData.primaryColor}</span>
+                        </div>
+                        <div className="form-group">
+                            <label>Secondary Color</label>
+                            <input
+                                type="color"
+                                value={formData.secondaryColor}
+                                onChange={(e) => setFormData({...formData, secondaryColor: e.target.value})}
+                            />
+                            <span>{formData.secondaryColor}</span>
+                        </div>
+                        <div className="form-group">
+                            <label>Accent Color</label>
+                            <input
+                                type="color"
+                                value={formData.accentColor}
+                                onChange={(e) => setFormData({...formData, accentColor: e.target.value})}
+                            />
+                            <span>{formData.accentColor}</span>
                         </div>
                     </div>
 
@@ -610,15 +658,21 @@ function AdminDashboard() {
                                 name: '',
                                 category: '',
                                 description: '',
-                                image: 'https://via.placeholder.com/400x250?text=Project+Image', // Dummy image
-                                banner: 'https://via.placeholder.com/1200x400?text=Banner+Image', // Dummy banner
+                                intro: '', 
+                                image: 'https://via.placeholder.com/400x250?text=Project+Image', 
+                                banner: 'https://via.placeholder.com/1200x400?text=Banner+Image', 
+                                projectImages: [], 
+                                primaryColor: '#4D92CE', 
+                                secondaryColor: '#2D2E75', 
+                                accentColor: '#8548FB', 
                                 features: [],
                                 technologies: [],
                                 platforms: [],
                                 type: 'mobile',
                                 collection: 'portfolio',
                                 visible: true,
-                                status: 'draft'
+                                status: 'draft',
+                                align: 'left' 
                             });
                         }}>
                             Cancel
@@ -652,15 +706,21 @@ function AdminDashboard() {
                                 name: '',
                                 category: '',
                                 description: '',
-                                image: 'https://via.placeholder.com/400x250?text=Project+Image', // Dummy image
-                                banner: 'https://via.placeholder.com/1200x400?text=Banner+Image', // Dummy banner
+                                intro: '', 
+                                image: 'https://via.placeholder.com/400x250?text=Project+Image', 
+                                banner: 'https://via.placeholder.com/1200x400?text=Banner+Image', 
+                                projectImages: [], 
+                                primaryColor: '#4D92CE', 
+                                secondaryColor: '#2D2E75', 
+                                accentColor: '#8548FB', 
                                 features: [],
                                 technologies: [],
                                 platforms: [],
                                 type: 'mobile', 
                                 collection: 'portfolio', 
                                 visible: true,
-                                status: 'draft'
+                                status: 'draft',
+                                align: 'left' 
                             });
                             setIsAddingProject(true);
                             setEditingProject(null);

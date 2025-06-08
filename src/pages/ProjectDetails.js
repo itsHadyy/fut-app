@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { doc, getDoc } from "firebase/firestore";
+import { db } from '../firebaseConfig'; // Import db
 
 function ProjectDetails() {
     const { projectId } = useParams();
@@ -7,59 +9,26 @@ function ProjectDetails() {
     const [project, setProject] = useState(null);
     const [loading, setLoading] = useState(true);
 
-    // This would typically come from Firestore
-    const projects = {
-        mobile: [
-            {
-                id: 1,
-                banner: '../public/media/Portfolio/Mobile/pre/Banner.png',
-                name: 'PRE Developments',
-                intro: 'FutApp is proud to introduce PRE Community, a cutting-edge community management application developed for PRE Developments. Designed to enhance security, convenience, and communication, PRE Community empowers residents with seamless gate access, visitor management, service bookings, and bill payments—all in one app.',
-                category: 'Community Application',
-                description: 'The Community Mobile Application is your one-stop solution for seamless living in your residential compound. This app connects residents to essential services, events, and each other. Enjoy features like facility booking, maintenance requests, community announcements, and exclusive deals from nearby businesses—all at your fingertips. Stay informed, engaged, and effortlessly manage your daily needs within the community.',
-                image: 'media/Portfolio/Mobile/PRE.png',
-                features: [
-                    'Community News Feed – Stay updated with announcements, events, and security alerts posted by developers.',
-                    'QR-Code Gate Access – Hassle-free entry for residents using their unique digital pass.',
-                    'Visitor Management – Send digital invitations to guests for a smooth check-in process.',
-                    'Service Appointments – Book trusted professionals for plumbing, carpentry, electrical work, and more.',
-                    'Bill Payments – Pay water, electricity, and gas bills securely from the app.'
-                ],
-                technologies: ['React Native', 'Firebase', 'Node.js'],
-                platforms: ['Android', 'iOS']
-            },
-            // ... other mobile projects
-        ],
-        websites: [
-            {
-                id: 6,
-                banner: 'media/Portfolio/Websites/arab-dairy/banner.png',
-                name: 'Arab Dairy Website',
-                category: 'Website',
-                description: "The Community Mobile Application is your one-stop solution for seamless living in your residential compound. This app connects residents to essential services, events, and each other. Enjoy features like facility booking, maintenance requests, community announcements, and exclusive deals from nearby businesses—all at your fingertips. Stay informed, engaged, and effortlessly manage your daily needs within the community.",
-                image: 'media/Portfolio/Websites/Arab Dairy.png',
-                features: [
-                    'Product Catalog',
-                    'Online Ordering',
-                    'Secure Payments',
-                    'Order Tracking',
-                    'Customer Support'
-                ],
-                technologies: ['React', 'Node.js', 'MongoDB'],
-                platforms: ['Web']
-            },
-        ]
-    };
-
     useEffect(() => {
-        // Simulate fetching data from Firestore
         const fetchProject = async () => {
             try {
-                // In the future, this will be replaced with actual Firestore query
-                const foundProject = [...projects.mobile, ...projects.websites].find(p => p.id === parseInt(projectId));
-                setProject(foundProject);
+                if (!projectId) {
+                    setProject(null);
+                    setLoading(false);
+                    return;
+                }
+                const projectRef = doc(db, "projects", projectId);
+                const docSnap = await getDoc(projectRef);
+
+                if (docSnap.exists()) {
+                    setProject({ id: docSnap.id, ...docSnap.data() });
+                } else {
+                    console.log("No such document!");
+                    setProject(null); // Project not found
+                }
             } catch (error) {
                 console.error('Error fetching project:', error);
+                setProject(null); // Set project to null on error
             } finally {
                 setLoading(false);
             }
@@ -89,6 +58,11 @@ function ProjectDetails() {
 
     return (
         <div className="project-details">
+            {project.banner && (
+                <div className="project-banner">
+                    <img src={project.banner} alt={`${project.name} Banner`} />
+                </div>
+            )}
             <div className="project-header">
                 <button onClick={() => navigate('/portfolio')} className="back-btn">
                     <span>←</span> Back to Portfolio
@@ -98,6 +72,11 @@ function ProjectDetails() {
             </div>
 
             <div className="project-content">
+                {project.intro && (
+                    <div className="project-intro">
+                        <p>{project.intro}</p>
+                    </div>
+                )}
                 <div className="project-image">
                     <img src={project.image} alt={project.name} />
                 </div>
@@ -108,18 +87,37 @@ function ProjectDetails() {
                         <p>{project.description}</p>
                     </div>
 
-                    {project.features && (
+                    {project.primaryColor && project.secondaryColor && project.accentColor && (
+                        <div className="project-colors">
+                            <h2>Colors</h2>
+                            <div className="color-palette">
+                                <div className="color-box" style={{ backgroundColor: project.primaryColor }}>
+                                    <span>{project.primaryColor}</span>
+                                </div>
+                                <div className="color-box" style={{ backgroundColor: project.secondaryColor }}>
+                                    <span>{project.secondaryColor}</span>
+                                </div>
+                                <div className="color-box" style={{ backgroundColor: project.accentColor }}>
+                                    <span>{project.accentColor}</span>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    {project.features && project.features.length > 0 && (
                         <div className="features">
                             <h2>Key Features</h2>
                             <ul>
                                 {project.features.map((feature, index) => (
-                                    <li key={index}>{feature}</li>
+                                    <li key={index}>
+                                        <strong>{feature.title}</strong>: {feature.description}
+                                    </li>
                                 ))}
                             </ul>
                         </div>
                     )}
 
-                    {project.technologies && (
+                    {project.technologies && project.technologies.length > 0 && (
                         <div className="technologies">
                             <h2>Technologies Used</h2>
                             <div className="tech-tags">
@@ -130,12 +128,25 @@ function ProjectDetails() {
                         </div>
                     )}
 
-                    {project.platforms && (
+                    {project.platforms && project.platforms.length > 0 && (
                         <div className="platforms">
                             <h2>Available Platforms</h2>
                             <div className="platform-tags">
                                 {project.platforms.map((platform, index) => (
                                     <span key={index} className="platform-tag">{platform}</span>
+                                ))}
+                            </div>
+                        </div>
+                    )}
+
+                    {project.projectImages && project.projectImages.length > 0 && (
+                        <div className="project-gallery">
+                            <h2>More Images</h2>
+                            <div className="gallery-grid">
+                                {project.projectImages.map((imgUrl, index) => (
+                                    <div key={index} className="gallery-item">
+                                        <img src={imgUrl} alt={`${project.name} - Image ${index + 1}`} />
+                                    </div>
                                 ))}
                             </div>
                         </div>
