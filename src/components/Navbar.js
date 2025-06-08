@@ -34,12 +34,12 @@ function Navbar() {
                         </Link>
                     </li>
                     <li>
-                        <Link to="/portfolio" className={location.pathname === '/portfolio' ? 'active' : ''}>
+                        <Link to="/portfolio" className={location.pathname.startsWith('/portfolio') || location.pathname.startsWith('/projects') ? 'active' : ''}>
                             Portfolio
                         </Link>
                     </li>
                     <li>
-                        <Link to="/products" className={location.pathname === '/products' ? 'active' : ''}>
+                        <Link to="/products" className={location.pathname.startsWith('/products') ? 'active' : ''}>
                             Products
                         </Link>
                     </li>
