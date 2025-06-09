@@ -11,6 +11,26 @@ function ProjectDetails() {
     const { projectId } = useParams();
     const navigate = useNavigate();
 
+    // Function to determine contrast text color
+    const getContrastTextColor = (hexcolor) => {
+        if (!hexcolor) return 'black'; // Default to black if no color is provided
+
+        // Remove # if it exists
+        const color = hexcolor.startsWith('#') ? hexcolor.slice(1) : hexcolor;
+
+        // Convert hex to RGB
+        const r = parseInt(color.substring(0, 2), 16);
+        const g = parseInt(color.substring(2, 4), 16);
+        const b = parseInt(color.substring(4, 6), 16);
+
+        // Calculate YIQ value for perceived brightness
+        // YIQ = ((R*299) + (G*587) + (B*114)) / 1000
+        const yiq = ((r * 299) + (g * 587) + (b * 114)) / 1000;
+
+        // Use a threshold (128 is commonly used for YIQ)
+        return (yiq > 186) ? 'black' : 'white'; // Adjusted threshold for better contrast on light colors
+    };
+
     // Function to highlight specific words in text
     const highlightText = (text) => {
         if (!text) return '';
@@ -136,6 +156,25 @@ function ProjectDetails() {
                         </div>
                     )}
 
+                    {project.primaryColor && project.secondaryColor && project.accentColor && (
+                        <section>
+                            <div className="color-palette-container">
+                                <div className="color-grid">
+                                    <h2 className="color-palette-title">Colors</h2>
+                                    <div className="color-block" style={{ backgroundColor: project.primaryColor }}>
+                                        <span style={{ color: getContrastTextColor(project.primaryColor) }}>{project.primaryColor}</span>
+                                    </div>
+                                    <div className="color-block" style={{ backgroundColor: project.secondaryColor }}>
+                                        <span style={{ color: getContrastTextColor(project.secondaryColor) }}>{project.secondaryColor}</span>
+                                    </div>
+                                    <div className="color-block" style={{ backgroundColor: project.accentColor }}>
+                                        <span style={{ color: getContrastTextColor(project.accentColor) }}>{project.accentColor}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    )}
+
                     {/* Main Content */}
                     <main>
                         {/* Project Overview */}
@@ -157,24 +196,6 @@ function ProjectDetails() {
                             <h2>About the Project</h2>
                             <p>{project.description}</p>
                         </section>
-
-                        {/* Color Palette */}
-                        {project.primaryColor && project.secondaryColor && project.accentColor && (
-                            <section>
-                                <h2>Color Palette</h2>
-                                <div className="color-palette">
-                                    <div style={{ backgroundColor: project.primaryColor }}>
-                                        <span>{project.primaryColor}</span>
-                                    </div>
-                                    <div style={{ backgroundColor: project.secondaryColor }}>
-                                        <span>{project.secondaryColor}</span>
-                                    </div>
-                                    <div style={{ backgroundColor: project.accentColor }}>
-                                        <span>{project.accentColor}</span>
-                                    </div>
-                                </div>
-                            </section>
-                        )}
 
                         {/* Key Features */}
                         {project.features && project.features.length > 0 && (

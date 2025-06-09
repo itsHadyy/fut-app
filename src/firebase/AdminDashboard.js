@@ -154,9 +154,25 @@ function AdminDashboard() {
         if (!formData.description) errors.description = 'Description is required';
         if (!formData.image) errors.image = 'Main image is required';
         if (!formData.intro) errors.intro = 'Introduction is required'; 
-        if (!formData.primaryColor) errors.primaryColor = 'Primary Color is required'; 
-        if (!formData.secondaryColor) errors.secondaryColor = 'Secondary Color is required'; 
-        if (!formData.accentColor) errors.accentColor = 'Accent Color is required'; 
+        
+        // Validate color codes
+        const hexColorRegex = /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/;
+        if (!formData.primaryColor) {
+            errors.primaryColor = 'Primary Color is required';
+        } else if (!hexColorRegex.test(formData.primaryColor)) {
+            errors.primaryColor = 'Invalid hex color code (e.g., #FF0000)';
+        }
+        if (!formData.secondaryColor) {
+            errors.secondaryColor = 'Secondary Color is required';
+        } else if (!hexColorRegex.test(formData.secondaryColor)) {
+            errors.secondaryColor = 'Invalid hex color code (e.g., #FF0000)';
+        }
+        if (!formData.accentColor) {
+            errors.accentColor = 'Accent Color is required';
+        } else if (!hexColorRegex.test(formData.accentColor)) {
+            errors.accentColor = 'Invalid hex color code (e.g., #FF0000)';
+        }
+        
         if (formData.features.length === 0) errors.features = 'At least one feature is required';
         if (formData.technologies.length === 0) errors.technologies = 'At least one technology is required';
         setValidationErrors(errors);
@@ -550,29 +566,32 @@ function AdminDashboard() {
                         <div className="form-group">
                             <label>Primary Color</label>
                             <input
-                                type="color"
+                                type="text"
                                 value={formData.primaryColor}
                                 onChange={(e) => setFormData({...formData, primaryColor: e.target.value})}
+                                placeholder="#FF0000"
                             />
-                            <span>{formData.primaryColor}</span>
+                            <div className="color-preview" style={{ backgroundColor: formData.primaryColor }}></div>
                         </div>
                         <div className="form-group">
                             <label>Secondary Color</label>
                             <input
-                                type="color"
+                                type="text"
                                 value={formData.secondaryColor}
                                 onChange={(e) => setFormData({...formData, secondaryColor: e.target.value})}
+                                placeholder="#00FF00"
                             />
-                            <span>{formData.secondaryColor}</span>
+                            <div className="color-preview" style={{ backgroundColor: formData.secondaryColor }}></div>
                         </div>
                         <div className="form-group">
                             <label>Accent Color</label>
                             <input
-                                type="color"
+                                type="text"
                                 value={formData.accentColor}
                                 onChange={(e) => setFormData({...formData, accentColor: e.target.value})}
+                                placeholder="#0000FF"
                             />
-                            <span>{formData.accentColor}</span>
+                            <div className="color-preview" style={{ backgroundColor: formData.accentColor }}></div>
                         </div>
                     </div>
 
