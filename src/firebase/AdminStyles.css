@@ -989,11 +989,12 @@ h1 {
     max-width: 600px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     font-weight: 500;
+    border: 1px dashed #ccc;
 }
 
 .loading {
-    background-color: #e0f7fa;
-    color: #007bb2;
+    color: #666;
+    background-color: #fdfdfd;
 }
 
 .success-message {
