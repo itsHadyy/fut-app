@@ -1449,3 +1449,37 @@ ol ul {
     color: var(--white);
     font-size: 46px;
 }
+
+.prototype-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.phases li{
+    color: var(--blue);
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+.phases li span{
+    color: var(--black);
+    font-weight: 100;
+}
+
+.product-images{
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 20px;
+}
+
+.website-img{
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.website-img img{
+    max-width: 620px;
+}
+
+.product-images img{
+    max-width: 260px;
+}

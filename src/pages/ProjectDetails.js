@@ -11,31 +11,23 @@ function ProjectDetails() {
     const { projectId } = useParams();
     const navigate = useNavigate();
 
-    // Function to determine contrast text color
     const getContrastTextColor = (hexcolor) => {
-        if (!hexcolor) return 'black'; // Default to black if no color is provided
+        if (!hexcolor) return 'black';
 
-        // Remove # if it exists
         const color = hexcolor.startsWith('#') ? hexcolor.slice(1) : hexcolor;
 
-        // Convert hex to RGB
         const r = parseInt(color.substring(0, 2), 16);
         const g = parseInt(color.substring(2, 4), 16);
         const b = parseInt(color.substring(4, 6), 16);
 
-        // Calculate YIQ value for perceived brightness
-        // YIQ = ((R*299) + (G*587) + (B*114)) / 1000
         const yiq = ((r * 299) + (g * 587) + (b * 114)) / 1000;
 
-        // Use a threshold (128 is commonly used for YIQ)
-        return (yiq > 186) ? 'black' : 'white'; // Adjusted threshold for better contrast on light colors
+        return (yiq > 186) ? 'black' : 'white';
     };
 
-    // Function to highlight specific words in text
     const highlightText = (text) => {
         if (!text) return '';
 
-        // Words to highlight (you can modify this array based on your needs)
         const wordsToHighlight = [
             'FutApp',
             'Project Board',
@@ -48,10 +40,8 @@ function ProjectDetails() {
             'Platform'
         ];
 
-        // Create a regex pattern that matches any of the words
         const pattern = new RegExp(`\\b(${wordsToHighlight.join('|')})\\b`, 'gi');
 
-        // Split the text into parts and wrap matching words in <strong> tags
         const parts = text.split(pattern);
         const result = [];
 
@@ -174,85 +164,55 @@ function ProjectDetails() {
                             </div>
                         </section>
                     )}
+                </div>
 
-                    {/* Main Content */}
-                    <main>
-                        {/* Project Overview */}
-                        <section>
-                            <h2>Overview</h2>
-                            <p>{project.intro}</p>
-                        </section>
+                <h2>
+                    Prototype
+                </h2>
 
-                        {/* Project Image */}
-                        <section>
-                            <img
-                                src={project.image}
-                                alt={project.name}
-                            />
-                        </section>
+                <div className='prototype-container'>
+                    <iframe
+                        style={{ border: '1px solid rgba(0, 0, 0, 0.1)' }}
+                        width="800"
+                        height="450"
+                        src="https://embed.figma.com/proto/ijlXhyB4r7bF9C5gUvB9sK/FutApps-s-New-Website?page-id=0%3A1&node-id=199-179&p=f&viewport=2142%2C-1957%2C0.66&scaling=scale-down&content-scaling=fixed&embed-host=share"
+                        allowFullScreen
+                        title="FutApps Website Prototype"
+                    ></iframe>
+                </div>
 
-                        {/* Project Description */}
-                        <section>
-                            <h2>About the Project</h2>
-                            <p>{project.description}</p>
-                        </section>
+                <h2>
+                    Creating a community application involves several key phases:
+                </h2>
 
-                        {/* Key Features */}
-                        {project.features && project.features.length > 0 && (
-                            <section>
-                                <h2>Key Features</h2>
-                                <ul>
-                                    {project.features.map((feature, index) => (
-                                        <li key={index}>
-                                            <strong>{feature.title}</strong>
-                                            <p>{feature.description}</p>
-                                        </li>
-                                    ))}
-                                </ul>
-                            </section>
-                        )}
+                <div className='phases'>
+                    <ol>
+                        <li>
+                            Concept & Planning
+                            <span> - Defining the app's purpose, features, and target audience. Gathering requirements and sketching out initial ideas.</span>
+                        </li>
+                        <li>
+                            UI/UX Design
+                            <span> - Designing an intuitive and visually appealing interface that ensures a seamless user experience for owners, visitors, and service providers.</span>
+                        </li>
+                        <li>
+                            Development & Testing
+                            <span> - Writing the code, integrating features like gate pass management, community news updates, reservations, and complaints. Conducting thorough testing to ensure functionality, security, and reliability.</span>
+                        </li>
+                        <li>
+                            Deployment & Publishing
+                            <span> - Preparing the application for release on the relevant platforms (iOS, Android, web). Setting up backend services, analytics, and security measures. Publishing the app and promoting it to the users.</span>
+                        </li>
+                    </ol>
+                </div>
 
-                        {/* Technologies */}
-                        {project.technologies && project.technologies.length > 0 && (
-                            <section>
-                                <h2>Technologies Used</h2>
-                                <div className="tech-list">
-                                    {project.technologies.map((tech, index) => (
-                                        <span key={index}>{tech}</span>
-                                    ))}
-                                </div>
-                            </section>
-                        )}
-
-                        {/* Platforms */}
-                        {project.platforms && project.platforms.length > 0 && (
-                            <section>
-                                <h2>Available Platforms</h2>
-                                <div className="platform-list">
-                                    {project.platforms.map((platform, index) => (
-                                        <span key={index}>{platform}</span>
-                                    ))}
-                                </div>
-                            </section>
-                        )}
-
-                        {/* Project Gallery */}
-                        {project.projectImages && project.projectImages.length > 0 && (
-                            <section>
-                                <h2>Project Gallery</h2>
-                                <div className="gallery">
-                                    {project.projectImages.map((imgUrl, index) => (
-                                        <div key={index}>
-                                            <img
-                                                src={imgUrl}
-                                                alt={`${project.name} - Image ${index + 1}`}
-                                            />
-                                        </div>
-                                    ))}
-                                </div>
-                            </section>
-                        )}
-                    </main>
+                <div className='product-images'>
+                    <img src='/media/Portfolio/Mobile/pre/Home screen ALL-1.png' />
+                    <img src='/media/Portfolio/Mobile/pre/Home screen ALL-2.png' />
+                    <img src='/media/Portfolio/Mobile/pre/Home screen ALL-1.png' />
+                    <img src='/media/Portfolio/Mobile/pre/Home screen ALL-2.png' />
+                    <img src='/media/Portfolio/Mobile/pre/Home screen ALL-1.png' />
+                    <img src='/media/Portfolio/Mobile/pre/Home screen ALL-2.png' />
                 </div>
             </div>
         </div>
