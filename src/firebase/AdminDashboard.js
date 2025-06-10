@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { db } from '../firebaseConfig';
-import { collection, addDoc, getDocs, doc, updateDoc, deleteDoc } from 'firebase/firestore';
+import { collection, addDoc, getDocs, doc, updateDoc, deleteDoc, serverTimestamp } from 'firebase/firestore';
 import './AdminStyles.css'; // Import admin specific styles
 
 function AdminDashboard() {
@@ -19,33 +19,55 @@ function AdminDashboard() {
 
     const [formData, setFormData] = useState({
         name: '',
-        category: '',
-        description: '',
-        intro: '', 
-        image: 'https://via.placeholder.com/400x250?text=Project+Image', 
-        banner: 'https://via.placeholder.com/1200x400?text=Banner+Image', 
-        projectImages: [], 
-        primaryColor: '#4D92CE', 
-        secondaryColor: '#2D2E75', 
-        accentColor: '#8548FB', 
-        features: [],
-        technologies: [],
-        platforms: [],
         type: 'mobile',
         collection: 'portfolio',
-        visible: true,
-        status: 'draft', 
-        align: 'left' 
+        category: '',
+        description: '',
+        banner: '',
+        intro: '',
+        features: [], // Make features optional by starting with empty array
+        platforms: [''],
+        primaryColor: '',
+        secondaryColor: '',
+        accentColor: '',
+        prototype: '',
+        productImages: [''],
+        align: 'left',
     });
     const [newFeature, setNewFeature] = useState({ title: '', description: '' });
     const [newTech, setNewTech] = useState('');
     const [newPlatform, setNewPlatform] = useState('');
     const [newProjectImageUrl, setNewProjectImageUrl] = useState(''); 
+    const [newPhase, setNewPhase] = useState('');
+    const [newColor, setNewColor] = useState('');
 
     const [previewMode, setPreviewMode] = useState(false);
     const [previewCollection, setPreviewCollection] = useState('portfolio');
 
     const [validationErrors, setValidationErrors] = useState({});
+
+    const defaultPhases = {
+        mobile: [
+            'Concept & Planning - Defining the app\'s purpose, features, and target audience. Gathering requirements and sketching out initial ideas.',
+            'UI/UX Design - Designing an intuitive and visually appealing interface that ensures a seamless user experience.',
+            'Development & Testing - Writing the code, integrating features, and conducting thorough testing to ensure functionality, security, and reliability.',
+            'Deployment & Publishing - Preparing the application for release on iOS and Android platforms. Setting up backend services and security measures.'
+        ],
+        website: [
+            'Discovery & Planning - Understanding client needs, defining goals, and creating a project roadmap.',
+            'Design & Wireframing - Creating visual designs and interactive prototypes for client approval.',
+            'Development - Building the website with responsive design and required functionality.',
+            'Testing & Launch - Quality assurance testing and deploying the website to production.'
+        ]
+    };
+
+    // Update phases when type changes
+    useEffect(() => {
+        setFormData(prev => ({
+            ...prev,
+            phases: defaultPhases[activeType]
+        }));
+    }, [activeType]);
 
     const fetchProjects = useCallback(async () => {
         setListLoading(true);
@@ -79,8 +101,8 @@ function AdminDashboard() {
         fetchProjects();
     }, [fetchProjects]);
 
-    const addFeature = () => {
-        if (newFeature.title.trim() && newFeature.description.trim()) {
+    const handleAddFeature = () => {
+        if (newFeature.title && newFeature.description) {
             setFormData(prev => ({
                 ...prev,
                 features: [...prev.features, newFeature]
@@ -89,14 +111,14 @@ function AdminDashboard() {
         }
     };
 
-    const removeFeature = (index) => {
+    const handleRemoveFeature = (index) => {
         setFormData(prev => ({
             ...prev,
             features: prev.features.filter((_, i) => i !== index)
         }));
     };
 
-    const addTech = () => {
+    const handleAddTech = () => {
         if (newTech.trim()) {
             setFormData(prev => ({
                 ...prev,
@@ -106,31 +128,31 @@ function AdminDashboard() {
         }
     };
 
-    const removeTech = (index) => {
+    const handleRemoveTech = (index) => {
         setFormData(prev => ({
             ...prev,
             technologies: prev.technologies.filter((_, i) => i !== index)
         }));
     };
 
-    const addPlatform = () => {
-        if (newPlatform.trim()) {
+    const handleAddPlatform = () => {
+        if (newPlatform) {
             setFormData(prev => ({
                 ...prev,
-                platforms: [...prev.platforms, newPlatform.trim()]
+                platforms: [...prev.platforms, newPlatform]
             }));
             setNewPlatform('');
         }
     };
 
-    const removePlatform = (index) => {
+    const handleRemovePlatform = (index) => {
         setFormData(prev => ({
             ...prev,
             platforms: prev.platforms.filter((_, i) => i !== index)
         }));
     };
 
-    const addProjectImage = () => {
+    const handleAddProjectImage = () => {
         if (newProjectImageUrl.trim()) {
             setFormData(prev => ({
                 ...prev,
@@ -140,41 +162,98 @@ function AdminDashboard() {
         }
     };
 
-    const removeProjectImage = (index) => {
+    const handleRemoveProjectImage = (index) => {
         setFormData(prev => ({
             ...prev,
             projectImages: prev.projectImages.filter((_, i) => i !== index)
         }));
     };
 
+    const handleAddPhase = () => {
+        if (newPhase) {
+            setFormData(prev => ({
+                ...prev,
+                phases: [...prev.phases, newPhase]
+            }));
+            setNewPhase('');
+        }
+    };
+
+    const handleAddProductImage = () => {
+        if (newProjectImageUrl.trim()) {
+            setFormData(prev => ({
+                ...prev,
+                productImages: [...prev.productImages, newProjectImageUrl.trim()]
+            }));
+            setNewProjectImageUrl('');
+        }
+    };
+
+    const handleAddColor = () => {
+        if (newColor && formData.colors.length < 3) {
+            setFormData(prev => ({
+                ...prev,
+                colors: [...prev.colors, newColor]
+            }));
+            setNewColor('');
+        }
+    };
+
+    const handleRemoveColor = (index) => {
+        if (formData.colors.length > 2) { // Ensure we always have at least 2 colors
+            setFormData(prev => ({
+                ...prev,
+                colors: prev.colors.filter((_, i) => i !== index)
+            }));
+        }
+    };
+
+    const handleRemoveItem = (field, index) => {
+        setFormData(prev => ({
+            ...prev,
+            [field]: prev[field].filter((_, i) => i !== index)
+        }));
+    };
+
     const validateForm = () => {
         const errors = {};
-        if (!formData.name) errors.name = 'Project name is required';
-        if (!formData.category) errors.category = 'Category is required';
-        if (!formData.description) errors.description = 'Description is required';
-        if (!formData.image) errors.image = 'Main image is required';
-        if (!formData.intro) errors.intro = 'Introduction is required'; 
         
-        // Validate color codes
-        const hexColorRegex = /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/;
-        if (!formData.primaryColor) {
-            errors.primaryColor = 'Primary Color is required';
-        } else if (!hexColorRegex.test(formData.primaryColor)) {
-            errors.primaryColor = 'Invalid hex color code (e.g., #FF0000)';
-        }
-        if (!formData.secondaryColor) {
-            errors.secondaryColor = 'Secondary Color is required';
-        } else if (!hexColorRegex.test(formData.secondaryColor)) {
-            errors.secondaryColor = 'Invalid hex color code (e.g., #FF0000)';
-        }
-        if (!formData.accentColor) {
-            errors.accentColor = 'Accent Color is required';
-        } else if (!hexColorRegex.test(formData.accentColor)) {
-            errors.accentColor = 'Invalid hex color code (e.g., #FF0000)';
-        }
+        if (!formData.name.trim()) errors.name = 'Project name is required';
+        if (!formData.category.trim()) errors.category = 'Project category is required';
+        if (!formData.description.trim()) errors.description = 'Project description is required';
+        if (!formData.banner.trim()) errors.banner = 'Banner image URL is required';
+        if (!formData.intro.trim()) errors.intro = 'Project introduction is required';
         
-        if (formData.features.length === 0) errors.features = 'At least one feature is required';
-        if (formData.technologies.length === 0) errors.technologies = 'At least one technology is required';
+        // Features are now optional
+        if (formData.features.length > 0) {
+            formData.features.forEach((feature, index) => {
+                if (!feature.title.trim()) {
+                    errors[`featureTitle${index}`] = 'Feature title is required if description is provided';
+                }
+                if (!feature.description.trim()) {
+                    errors[`featureDesc${index}`] = 'Feature description is required if title is provided';
+                }
+            });
+        }
+
+        // Validate platforms
+        if (!formData.platforms.length || !formData.platforms[0].trim()) {
+            errors.platforms = 'At least one platform is required';
+        }
+
+        // Validate colors - only primary and secondary are required
+        if (!formData.primaryColor.trim()) errors.primaryColor = 'Primary color is required';
+        if (!formData.secondaryColor.trim()) errors.secondaryColor = 'Secondary color is required';
+        // Accent color is optional
+
+        // Validate prototype
+        if (!formData.prototype.trim()) errors.prototype = 'Prototype iframe code is required';
+
+        // Validate product images
+        if (!formData.productImages.length || !formData.productImages[0].trim()) {
+            errors.productImages = 'At least one product image is required';
+        }
+
         setValidationErrors(errors);
         return Object.keys(errors).length === 0;
     };
@@ -183,23 +262,17 @@ function AdminDashboard() {
         setEditingProject(project);
         setFormData({
             name: project.name,
-            category: project.category,
-            description: project.description,
-            intro: project.intro || '', 
-            image: project.image || 'https://via.placeholder.com/400x250?text=Project+Image', 
-            banner: project.banner || 'https://via.placeholder.com/1200x400?text=Banner+Image', 
-            projectImages: project.projectImages || [], 
-            primaryColor: project.primaryColor || '#4D92CE', 
-            secondaryColor: project.secondaryColor || '#2D2E75', 
-            accentColor: project.accentColor || '#8548FB', 
-            features: project.features || [],
-            technologies: project.technologies || [],
-            platforms: project.platforms || [],
             type: project.type,
-            collection: project.collection,
-            visible: project.visible,
-            status: project.status || 'draft',
-            align: project.align || 'left' 
+            banner: project.banner,
+            intro: project.intro,
+            features: project.features,
+            platforms: project.platforms,
+            primaryColor: project.primaryColor,
+            secondaryColor: project.secondaryColor,
+            accentColor: project.accentColor,
+            prototype: project.prototype,
+            productImages: project.productImages,
+            align: project.align,
         });
         setIsAddingProject(true);
     };
@@ -218,60 +291,42 @@ function AdminDashboard() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        
         if (!validateForm()) {
-            setErrorMessage('Please fill in all required fields');
             return;
         }
-
-        setLoading(true);
-        setSuccessMessage(null);
-        setErrorMessage(null);
 
         try {
             const projectData = {
                 ...formData,
-                updatedAt: new Date().toISOString()
+                createdAt: serverTimestamp(),
+                updatedAt: serverTimestamp()
             };
 
-            if (editingProject) {
-                const projectRef = doc(db, 'projects', editingProject.id);
-                await updateDoc(projectRef, projectData);
-                setSuccessMessage('Project updated successfully!');
-            } else {
-                projectData.createdAt = new Date().toISOString();
-                await addDoc(collection(db, 'projects'), projectData);
-                setSuccessMessage('Project added successfully!');
-            }
+            await addDoc(collection(db, 'projects'), projectData);
             
+            // Reset form
             setFormData({
                 name: '',
-                category: '',
-                description: '',
-                intro: '', 
-                image: 'https://via.placeholder.com/400x250?text=Project+Image', 
-                banner: 'https://via.placeholder.com/1200x400?text=Banner+Image', 
-                projectImages: [], 
-                primaryColor: '#4D92CE', 
-                secondaryColor: '#2D2E75', 
-                accentColor: '#8548FB', 
-                features: [],
-                technologies: [],
-                platforms: [],
                 type: 'mobile',
-                collection: 'portfolio',
-                visible: true,
-                status: 'draft',
-                align: 'left' 
+                banner: '',
+                intro: '',
+                features: [],
+                platforms: [''],
+                primaryColor: '',
+                secondaryColor: '',
+                accentColor: '',
+                prototype: '',
+                productImages: [''],
+                align: 'left',
             });
-            setIsAddingProject(false); 
-            setEditingProject(null); 
+            setValidationErrors({});
             
-            await fetchProjects();
+            // Refresh projects list
+            fetchProjects();
         } catch (error) {
-            console.error(editingProject ? 'Error updating project:' : 'Error adding project:', error);
-            setErrorMessage(editingProject ? 'Failed to update project' : 'Failed to add project');
-        } finally {
-            setLoading(false);
+            console.error('Error adding project:', error);
+            setErrorMessage('Failed to add project. Please try again.');
         }
     };
 
@@ -313,11 +368,11 @@ function AdminDashboard() {
                 <div className="preview-content">
                     <div className="preview-project">
                         <h2>{formData.name || 'Project Name'}</h2>
-                        <span>{formData.category || 'Category'}</span>
-                        <p>{formData.description || 'Description'}</p>
-                        {formData.image && (
+                        <span>{formData.type === 'mobile' ? 'Mobile Application' : 'Website'}</span>
+                        <p>{formData.intro || 'Project Introduction'}</p>
+                        {formData.banner && (
                             <div className="preview-image">
-                                <img src={formData.image} alt="Preview" />
+                                <img src={formData.banner} alt="Preview" />
                             </div>
                         )}
                         {formData.features.length > 0 && (
@@ -373,20 +428,20 @@ function AdminDashboard() {
 
                         <div className="form-group">
                             <label>
-                                Category *
+                                Project Category *
                                 {validationErrors.category && <span className="error">{validationErrors.category}</span>}
                             </label>
                             <input
                                 type="text"
                                 value={formData.category}
                                 onChange={(e) => setFormData({...formData, category: e.target.value})}
-                                placeholder="Enter project category"
+                                placeholder="Enter project category (e.g., community app)"
                             />
                         </div>
 
                         <div className="form-group">
                             <label>
-                                Description *
+                                Project Description *
                                 {validationErrors.description && <span className="error">{validationErrors.description}</span>}
                             </label>
                             <textarea
@@ -395,48 +450,36 @@ function AdminDashboard() {
                                 placeholder="Enter project description"
                             />
                         </div>
-
-                        <div className="form-group">
-                            <label>
-                                Introduction *
-                                {validationErrors.intro && <span className="error">{validationErrors.intro}</span>}
-                            </label>
-                            <textarea
-                                value={formData.intro}
-                                onChange={(e) => setFormData({...formData, intro: e.target.value})}
-                                placeholder="Enter a brief introduction for the project"
-                            />
-                        </div>
                     </div>
 
                     <div className="form-section">
-                        <h3>Project Type & Visibility</h3>
+                        <h3>Project Type & Display</h3>
                         <div className="form-group">
                             <label>Project Type</label>
                             <div className="radio-group">
-                                <label>
+                                <label className="radio-label">
                                     <input
                                         type="radio"
                                         value="mobile"
                                         checked={formData.type === 'mobile'}
                                         onChange={(e) => setFormData({...formData, type: e.target.value})}
                                     />
-                                    Mobile Application
+                                    <span className="radio-text">Mobile Application</span>
                                 </label>
-                                <label>
+                                <label className="radio-label">
                                     <input
                                         type="radio"
                                         value="website"
                                         checked={formData.type === 'website'}
                                         onChange={(e) => setFormData({...formData, type: e.target.value})}
                                     />
-                                    Website
+                                    <span className="radio-text">Website</span>
                                 </label>
                             </div>
                         </div>
 
                         <div className="form-group">
-                            <label>Collection</label>
+                            <label>Display Location</label>
                             <div className="collection-selector">
                                 <div 
                                     className={`collection-option ${formData.collection === 'portfolio' ? 'active' : ''}`}
@@ -456,106 +499,152 @@ function AdminDashboard() {
                         </div>
 
                         <div className="form-group">
-                            <label>Alignment on Project List Page</label>
+                            <label>Project Alignment on {formData.collection === 'portfolio' ? 'Portfolio' : 'Products'} Page</label>
                             <div className="radio-group">
-                                <label>
+                                <label className="radio-label">
                                     <input
                                         type="radio"
                                         name="alignment"
                                         value="left"
                                         checked={formData.align === 'left'}
-                                        onClick={() => {
-                                            console.log('Left clicked, current align:', formData.align);
-                                            setFormData(prev => {
-                                                console.log('Setting align to left');
-                                                return {...prev, align: 'left'};
-                                            });
-                                        }}
+                                        onChange={(e) => setFormData({...formData, align: e.target.value})}
                                     />
-                                    Left
+                                    <span className="radio-text">Left</span>
                                 </label>
-                                <label>
+                                <label className="radio-label">
                                     <input
                                         type="radio"
                                         name="alignment"
                                         value="right"
                                         checked={formData.align === 'right'}
-                                        onClick={() => {
-                                            console.log('Right clicked, current align:', formData.align);
-                                            setFormData(prev => {
-                                                console.log('Setting align to right');
-                                                return {...prev, align: 'right'};
-                                            });
-                                        }}
+                                        onChange={(e) => setFormData({...formData, align: e.target.value})}
                                     />
-                                    Right
+                                    <span className="radio-text">Right</span>
                                 </label>
-                            </div>
-                            <div style={{marginTop: '10px', color: '#666'}}>
-                                Current alignment: {formData.align}
-                            </div>
-                        </div>
-
-                        <div className="form-group">
-                            <label>Visibility</label>
-                            <div className="visibility-toggle">
-                                <label className="switch">
-                                    <input
-                                        type="checkbox"
-                                        checked={formData.visible}
-                                        onChange={(e) => setFormData({...formData, visible: e.target.checked})}
-                                    />
-                                    <span className="slider"></span>
-                                </label>
-                                <span>{formData.visible ? 'Published' : 'Draft'}</span>
                             </div>
                         </div>
                     </div>
 
                     <div className="form-section">
-                        <h3>Media</h3>
-                        <div className="form-group">
-                            <label>Banner Image URL</label>
-                            <input
-                                type="url"
-                                value={formData.banner}
-                                onChange={(e) => setFormData({ ...formData, banner: e.target.value })}
-                                placeholder="https://example.com/banner.jpg"
-                            />
-                        </div>
+                        <h3>Media & Content</h3>
                         <div className="form-group">
                             <label>
-                                Main Project Image URL *
-                                {validationErrors.image && <span className="error">{validationErrors.image}</span>}
+                                Banner Image URL *
+                                {validationErrors.banner && <span className="error">{validationErrors.banner}</span>}
                             </label>
                             <input
-                                type="url"
-                                value={formData.image}
-                                onChange={(e) => setFormData({ ...formData, image: e.target.value })}
-                                placeholder="https://example.com/project.jpg"
+                                type="text"
+                                value={formData.banner}
+                                onChange={(e) => setFormData({...formData, banner: e.target.value})}
+                                placeholder="Enter banner image URL"
                             />
+                            {formData.banner && (
+                                <div className="image-preview">
+                                    <img src={formData.banner} alt="Banner preview" />
+                                </div>
+                            )}
                         </div>
 
                         <div className="form-group">
-                            <label>Additional Project Images</label>
-                            <div className="array-input-group">
-                                <input
-                                    type="url"
-                                    placeholder="Add image URL"
-                                    value={newProjectImageUrl}
-                                    onChange={(e) => setNewProjectImageUrl(e.target.value)}
-                                />
-                                <button type="button" onClick={addProjectImage}>Add</button>
-                            </div>
-                            <div className="tech-tags"> 
-                                {formData.projectImages.map((imgUrl, index) => (
-                                    <span key={index} className="tech-tag">
-                                        {imgUrl.substring(0, 30)}...
-                                        <button type="button" onClick={() => removeProjectImage(index)}>×</button>
-                                    </span>
-                                ))}
-                            </div>
+                            <label>
+                                Project Introduction *
+                                {validationErrors.intro && <span className="error">{validationErrors.intro}</span>}
+                            </label>
+                            <textarea
+                                value={formData.intro}
+                                onChange={(e) => setFormData({...formData, intro: e.target.value})}
+                                placeholder="Enter project introduction"
+                            />
                         </div>
+                    </div>
+
+                    <div className="form-section">
+                        <h3>Features (Optional)</h3>
+                        <p className="section-description">Add key features of your project. This section is optional.</p>
+                        {formData.features.map((feature, index) => (
+                            <div key={index} className="feature-group">
+                                <div className="form-group">
+                                    <input
+                                        type="text"
+                                        value={feature.title}
+                                        onChange={(e) => {
+                                            const newFeatures = [...formData.features];
+                                            newFeatures[index].title = e.target.value;
+                                            setFormData({...formData, features: newFeatures});
+                                        }}
+                                        placeholder="Feature title"
+                                    />
+                                    <textarea
+                                        value={feature.description}
+                                        onChange={(e) => {
+                                            const newFeatures = [...formData.features];
+                                            newFeatures[index].description = e.target.value;
+                                            setFormData({...formData, features: newFeatures});
+                                        }}
+                                        placeholder="Feature description"
+                                    />
+                                    <button
+                                        type="button"
+                                        className="remove-btn"
+                                        onClick={() => {
+                                            const newFeatures = formData.features.filter((_, i) => i !== index);
+                                            setFormData({...formData, features: newFeatures});
+                                        }}
+                                    >
+                                        Remove Feature
+                                    </button>
+                                </div>
+                            </div>
+                        ))}
+                        <button
+                            type="button"
+                            className="add-btn"
+                            onClick={() => setFormData({
+                                ...formData,
+                                features: [...formData.features, { title: '', description: '' }]
+                            })}
+                        >
+                            Add Feature
+                        </button>
+                    </div>
+
+                    <div className="form-section">
+                        <h3>Platforms *</h3>
+                        {validationErrors.platforms && <span className="error">{validationErrors.platforms}</span>}
+                        {formData.platforms.map((platform, index) => (
+                            <div key={index} className="form-group">
+                                <div className="array-input-group">
+                                    <input
+                                        type="text"
+                                        value={platform}
+                                        onChange={(e) => {
+                                            const newPlatforms = [...formData.platforms];
+                                            newPlatforms[index] = e.target.value;
+                                            setFormData({...formData, platforms: newPlatforms});
+                                        }}
+                                        placeholder="Enter platform"
+                                    />
+                                    <button
+                                        type="button"
+                                        onClick={() => {
+                                            const newPlatforms = formData.platforms.filter((_, i) => i !== index);
+                                            setFormData({...formData, platforms: newPlatforms});
+                                        }}
+                                    >
+                                        Remove
+                                    </button>
+                                </div>
+                            </div>
+                        ))}
+                        <button
+                            type="button"
+                            onClick={() => setFormData({
+                                ...formData,
+                                platforms: [...formData.platforms, '']
+                            })}
+                        >
+                            Add Platform
+                        </button>
                     </div>
 
                     <div className="form-section">
@@ -564,7 +653,7 @@ function AdminDashboard() {
                         {validationErrors.secondaryColor && <span className="error">{validationErrors.secondaryColor}</span>}
                         {validationErrors.accentColor && <span className="error">{validationErrors.accentColor}</span>}
                         <div className="form-group">
-                            <label>Primary Color</label>
+                            <label>Primary Color *</label>
                             <input
                                 type="text"
                                 value={formData.primaryColor}
@@ -574,7 +663,7 @@ function AdminDashboard() {
                             <div className="color-preview" style={{ backgroundColor: formData.primaryColor }}></div>
                         </div>
                         <div className="form-group">
-                            <label>Secondary Color</label>
+                            <label>Secondary Color *</label>
                             <input
                                 type="text"
                                 value={formData.secondaryColor}
@@ -584,7 +673,7 @@ function AdminDashboard() {
                             <div className="color-preview" style={{ backgroundColor: formData.secondaryColor }}></div>
                         </div>
                         <div className="form-group">
-                            <label>Accent Color</label>
+                            <label>Accent Color (Optional)</label>
                             <input
                                 type="text"
                                 value={formData.accentColor}
@@ -595,75 +684,53 @@ function AdminDashboard() {
                         </div>
                     </div>
 
+                    <div className="form-group">
+                        <label>Prototype Iframe Code *</label>
+                        {validationErrors.prototype && <span className="error">{validationErrors.prototype}</span>}
+                        <textarea
+                            value={formData.prototype}
+                            onChange={(e) => setFormData({...formData, prototype: e.target.value})}
+                            placeholder="Enter prototype iframe code"
+                        />
+                    </div>
+
                     <div className="form-section">
-                        <h3>Features *</h3>
-                        {validationErrors.features && <span className="error">{validationErrors.features}</span>}
-                        <div className="feature-input-group">
-                            <input
-                                type="text"
-                                placeholder="Feature Title"
-                                value={newFeature.title}
-                                onChange={(e) => setNewFeature({ ...newFeature, title: e.target.value })}
-                            />
-                            <textarea
-                                placeholder="Feature Description"
-                                value={newFeature.description}
-                                onChange={(e) => setNewFeature({ ...newFeature, description: e.target.value })}
-                            />
-                            <button type="button" onClick={addFeature}>Add Feature</button>
-                        </div>
-                        <div className="features-list">
-                            {formData.features.map((feature, index) => (
-                                <div key={index} className="feature-item">
-                                    <h4>{feature.title}</h4>
-                                    <p>{feature.description}</p>
-                                    <button type="button" onClick={() => removeFeature(index)}>Remove</button>
+                        <h3>Product Images *</h3>
+                        {validationErrors.productImages && <span className="error">{validationErrors.productImages}</span>}
+                        {formData.productImages.map((image, index) => (
+                            <div key={index} className="form-group">
+                                <div className="array-input-group">
+                                    <input
+                                        type="text"
+                                        value={image}
+                                        onChange={(e) => {
+                                            const newImages = [...formData.productImages];
+                                            newImages[index] = e.target.value;
+                                            setFormData({...formData, productImages: newImages});
+                                        }}
+                                        placeholder="Enter image URL"
+                                    />
+                                    <button
+                                        type="button"
+                                        onClick={() => {
+                                            const newImages = formData.productImages.filter((_, i) => i !== index);
+                                            setFormData({...formData, productImages: newImages});
+                                        }}
+                                    >
+                                        Remove
+                                    </button>
                                 </div>
-                            ))}
-                        </div>
-                    </div>
-
-                    <div className="form-section">
-                        <h3>Technologies *</h3>
-                        {validationErrors.technologies && <span className="error">{validationErrors.technologies}</span>}
-                        <div className="array-input-group">
-                            <input
-                                type="text"
-                                placeholder="Add Technology"
-                                value={newTech}
-                                onChange={(e) => setNewTech(e.target.value)}
-                            />
-                            <button type="button" onClick={addTech}>Add</button>
-                        </div>
-                        <div className="tech-tags">
-                            {formData.technologies.map((tech, index) => (
-                                <span key={index} className="tech-tag">
-                                    {tech}
-                                    <button type="button" onClick={() => removeTech(index)}>×</button>
-                                </span>
-                            ))}
-                        </div>
-                    </div>
-
-                    <div className="form-section">
-                        <h3>Platforms</h3>
-                        <div className="array-input-group">
-                            <input
-                                type="text"
-                                placeholder="Add Platform"
-                                value={newPlatform}
-                                onChange={(e) => setNewPlatform(e.target.value)}
-                            />
-                            <button type="button" onClick={addPlatform}>Add</button>
-                        </div>
-                        <div className="tech-tags">
-                            {formData.platforms.map((platform, index) => (
-                                <span key={index} className="tech-tag">
-                                    {platform}
-                                    <button type="button" onClick={() => removePlatform(index)}>×</button>
-                                </span>
-                            ))}
-                        </div>
+                            </div>
+                        ))}
+                        <button
+                            type="button"
+                            onClick={() => setFormData({
+                                ...formData,
+                                productImages: [...formData.productImages, '']
+                            })}
+                        >
+                            Add Image
+                        </button>
                     </div>
 
                     <div className="form-actions">
@@ -675,23 +742,20 @@ function AdminDashboard() {
                             setEditingProject(null);
                             setFormData({
                                 name: '',
-                                category: '',
-                                description: '',
-                                intro: '', 
-                                image: 'https://via.placeholder.com/400x250?text=Project+Image', 
-                                banner: 'https://via.placeholder.com/1200x400?text=Banner+Image', 
-                                projectImages: [], 
-                                primaryColor: '#4D92CE', 
-                                secondaryColor: '#2D2E75', 
-                                accentColor: '#8548FB', 
-                                features: [],
-                                technologies: [],
-                                platforms: [],
                                 type: 'mobile',
                                 collection: 'portfolio',
-                                visible: true,
-                                status: 'draft',
-                                align: 'left' 
+                                category: '',
+                                description: '',
+                                banner: '',
+                                intro: '',
+                                features: [],
+                                platforms: [''],
+                                primaryColor: '',
+                                secondaryColor: '',
+                                accentColor: '',
+                                prototype: '',
+                                productImages: [''],
+                                align: 'left',
                             });
                         }}>
                             Cancel
@@ -723,23 +787,17 @@ function AdminDashboard() {
                         <button className="add-btn" onClick={() => {
                             setFormData({
                                 name: '',
-                                category: '',
-                                description: '',
-                                intro: '', 
-                                image: 'https://via.placeholder.com/400x250?text=Project+Image', 
-                                banner: 'https://via.placeholder.com/1200x400?text=Banner+Image', 
-                                projectImages: [], 
-                                primaryColor: '#4D92CE', 
-                                secondaryColor: '#2D2E75', 
-                                accentColor: '#8548FB', 
+                                type: 'mobile',
+                                banner: '',
+                                intro: '',
                                 features: [],
-                                technologies: [],
-                                platforms: [],
-                                type: 'mobile', 
-                                collection: 'portfolio', 
-                                visible: true,
-                                status: 'draft',
-                                align: 'left' 
+                                platforms: [''],
+                                primaryColor: '',
+                                secondaryColor: '',
+                                accentColor: '',
+                                prototype: '',
+                                productImages: [''],
+                                align: 'left',
                             });
                             setIsAddingProject(true);
                             setEditingProject(null);
@@ -795,11 +853,11 @@ function AdminDashboard() {
                                     <div className="projects-grid">
                                         {projectsList.map((project) => (
                                             <div key={project.id} className="project-card">
-                                                <img src={project.image} alt={project.name} className="project-image" />
+                                                <img src={project.banner} alt={project.name} className="project-image" />
                                                 <div className="project-info">
                                                     <h3>{project.name}</h3>
-                                                    <p className="project-category">{project.category}</p>
-                                                    <p className="project-description">{project.description}</p>
+                                                    <p className="project-category">{project.type === 'mobile' ? 'Mobile Application' : 'Website'}</p>
+                                                    <p className="project-description">{project.intro || 'No introduction provided'}</p>
                                                     <div className="project-actions">
                                                         <button onClick={() => handleEdit(project)} className="edit-btn">Edit</button>
                                                         <button onClick={() => handleDelete(project.id)} className="delete-btn">Delete</button>

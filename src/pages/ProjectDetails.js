@@ -3,13 +3,11 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { doc, getDoc } from "firebase/firestore";
 import { db } from '../firebaseConfig';
 
-function ProjectDetails() {
-    const [project, setProject] = useState(null);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
-
+const ProjectDetails = () => {
     const { projectId } = useParams();
     const navigate = useNavigate();
+    const [project, setProject] = useState(null);
+    const [loading, setLoading] = useState(true);
 
     const getContrastTextColor = (hexcolor) => {
         if (!hexcolor) return 'black';
@@ -68,37 +66,41 @@ function ProjectDetails() {
                 const docSnap = await getDoc(projectRef);
 
                 if (docSnap.exists()) {
-                    setProject({ id: docSnap.id, ...docSnap.data() });
+                    const data = docSnap.data();
+                    // Convert color fields to array format
+                    const colors = [
+                        data.primaryColor,
+                        data.secondaryColor,
+                        data.accentColor
+                    ].filter(color => color); // Only include non-empty colors
+
+                    setProject({
+                        id: docSnap.id,
+                        ...data,
+                        colors: colors.length > 0 ? colors : ['#4D92CE', '#2D2E75'],
+                        features: data.features || [],
+                        platforms: data.platforms || [],
+                        phases: data.phases || [],
+                        productImages: data.productImages || []
+                    });
                 } else {
                     throw new Error('Project not found');
                 }
             } catch (error) {
                 console.error('Error fetching project:', error);
-                setError(error.message);
+                navigate('/404');
             } finally {
                 setLoading(false);
             }
         };
 
         fetchProject();
-    }, [projectId]);
+    }, [projectId, navigate]);
 
     if (loading) {
         return (
             <div className="loading">
-                <h1>Loading Project Details...</h1>
-            </div>
-        );
-    }
-
-    if (error) {
-        return (
-            <div className="error">
-                <h1>Error Loading Project</h1>
-                <p>{error}</p>
-                <button onClick={() => navigate('/portfolio')}>
-                    Back to Portfolio
-                </button>
+                <h1>Loading...</h1>
             </div>
         );
     }
@@ -107,7 +109,7 @@ function ProjectDetails() {
         return (
             <div className="not-found">
                 <h1>Project Not Found</h1>
-                <button onClick={() => navigate('/portfolio')}>
+                <button className="btn" onClick={() => navigate('/portfolio')}>
                     Back to Portfolio
                 </button>
             </div>
@@ -116,7 +118,7 @@ function ProjectDetails() {
 
     return (
         <div className="project-details">
-            <div className='project-banner'>
+            <div className="project-banner">
                 <img src={project.banner} alt={project.name} />
             </div>
 
@@ -166,54 +168,69 @@ function ProjectDetails() {
                     )}
                 </div>
 
-                <h2>
-                    Prototype
-                </h2>
-
-                <div className='prototype-container'>
-                    <iframe
-                        style={{ border: '1px solid rgba(0, 0, 0, 0.1)' }}
-                        width="800"
-                        height="450"
-                        src="https://embed.figma.com/proto/ijlXhyB4r7bF9C5gUvB9sK/FutApps-s-New-Website?page-id=0%3A1&node-id=199-179&p=f&viewport=2142%2C-1957%2C0.66&scaling=scale-down&content-scaling=fixed&embed-host=share"
-                        allowFullScreen
-                        title="FutApps Website Prototype"
-                    ></iframe>
-                </div>
+                <h2>Prototype</h2>
+                {project.prototype && (
+                    <div className="prototype-container">
+                        <div dangerouslySetInnerHTML={{ __html: project.prototype }} />
+                    </div>
+                )}
 
                 <h2>
-                    Creating a community application involves several key phases:
+                    {project.type === 'mobile' ? 'Creating a mobile application involves several key phases:' : 'Creating a website involves several key phases:'}
                 </h2>
 
                 <div className='phases'>
                     <ol>
-                        <li>
-                            Concept & Planning
-                            <span> - Defining the app's purpose, features, and target audience. Gathering requirements and sketching out initial ideas.</span>
-                        </li>
-                        <li>
-                            UI/UX Design
-                            <span> - Designing an intuitive and visually appealing interface that ensures a seamless user experience for owners, visitors, and service providers.</span>
-                        </li>
-                        <li>
-                            Development & Testing
-                            <span> - Writing the code, integrating features like gate pass management, community news updates, reservations, and complaints. Conducting thorough testing to ensure functionality, security, and reliability.</span>
-                        </li>
-                        <li>
-                            Deployment & Publishing
-                            <span> - Preparing the application for release on the relevant platforms (iOS, Android, web). Setting up backend services, analytics, and security measures. Publishing the app and promoting it to the users.</span>
-                        </li>
+                        {project.type === 'mobile' ? (
+                            <>
+                                <li>
+                                    Concept & Planning
+                                    <span> - Defining the app's purpose, features, and target audience. Gathering requirements and sketching out initial ideas.</span>
+                                </li>
+                                <li>
+                                    UI/UX Design
+                                    <span> - Designing an intuitive and visually appealing interface that ensures a seamless user experience for owners, visitors, and service providers.</span>
+                                </li>
+                                <li>
+                                    Development & Testing
+                                    <span> - Writing the code, integrating features like gate pass management, community news updates, reservations, and complaints. Conducting thorough testing to ensure functionality, security, and reliability.</span>
+                                </li>
+                                <li>
+                                    Deployment & Publishing
+                                    <span> - Preparing the application for release on the relevant platforms (iOS, Android, web). Setting up backend services, analytics, and security measures. Publishing the app and promoting it to the users.</span>
+                                </li>
+                            </>
+                        ) : (
+                            <>
+                                <li>
+                                    Discovery & Planning
+                                    <span> - Understanding your business needs, target audience, and goals. Creating a detailed project roadmap and content strategy.</span>
+                                </li>
+                                <li>
+                                    Design & Wireframing
+                                    <span> - Creating visual designs and wireframes that align with your brand identity. Developing a responsive layout that works across all devices.</span>
+                                </li>
+                                <li>
+                                    Development & Integration
+                                    <span> - Building the website using modern technologies. Implementing features, content management systems, and third-party integrations.</span>
+                                </li>
+                                <li>
+                                    Testing & Launch
+                                    <span> - Conducting thorough testing for functionality, performance, and security. Deploying the website and ensuring everything runs smoothly.</span>
+                                </li>
+                            </>
+                        )}
                     </ol>
                 </div>
 
-                <div className='product-images'>
-                    <img src='/media/Portfolio/Mobile/pre/Home screen ALL-1.png' />
-                    <img src='/media/Portfolio/Mobile/pre/Home screen ALL-2.png' />
-                    <img src='/media/Portfolio/Mobile/pre/Home screen ALL-1.png' />
-                    <img src='/media/Portfolio/Mobile/pre/Home screen ALL-2.png' />
-                    <img src='/media/Portfolio/Mobile/pre/Home screen ALL-1.png' />
-                    <img src='/media/Portfolio/Mobile/pre/Home screen ALL-2.png' />
-                </div>
+                {project.productImages && project.productImages.length > 0 && (
+                    <div className={`product-images ${project.type === 'website' ? 'website-img' : ''}`}>
+                        <h2>Product Images</h2>
+                        {project.productImages.map((image, index) => (
+                            <img key={index} src={image} alt={`Product ${index + 1}`} />
+                        ))}
+                    </div>
+                )}
             </div>
         </div>
     );
