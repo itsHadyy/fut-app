@@ -2,10 +2,22 @@ import { Link } from 'react-router-dom';
 import { FaInstagram, FaFacebook, FaLinkedin } from 'react-icons/fa';
 import { FaXTwitter } from "react-icons/fa6";
 import { useLocation } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
 
 function Footer() {
     const location = useLocation();
     const isContactPage = location.pathname === '/contact';
+
+    const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
+
+    useEffect(() => {
+        document.documentElement.setAttribute('data-theme', theme);
+        localStorage.setItem('theme', theme);
+    }, [theme]);
+
+    const toggleTheme = () => {
+        setTheme((prevTheme) => (prevTheme === 'light' ? 'dark' : 'light'));
+    };
 
     return (
         <div className="footer-container">
@@ -46,6 +58,12 @@ function Footer() {
                         <li><Link to="/products">Products</Link></li>
                         <li><Link to="/services">Services</Link></li>
                         <li><Link to="/contact">Contact Us</Link></li>
+                        <li>
+                            <label className="switch">
+                                <input type="checkbox" onChange={toggleTheme} checked={theme === 'dark'} />
+                                <span className="slider round"></span>
+                            </label>
+                        </li>
                     </ul>
                 </div>
             </footer>

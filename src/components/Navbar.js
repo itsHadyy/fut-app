@@ -1,5 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import logo from '../logo.png';
+import logoWhite from '../logo-white.png';
 import { useEffect, useState } from 'react';
 
 function Navbar() {
