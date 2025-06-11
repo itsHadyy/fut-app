@@ -7,6 +7,13 @@ import React, { useState, useEffect } from 'react';
 function Footer() {
     const location = useLocation();
     const isContactPage = location.pathname === '/contact';
+    const [formData, setFormData] = useState({
+        name: '',
+        email: '',
+        message: ''
+    });
+    const [status, setStatus] = useState({ type: '', message: '' });
+    const [loading, setLoading] = useState(false);
 
     const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
 
@@ -19,6 +26,42 @@ function Footer() {
         setTheme((prevTheme) => (prevTheme === 'light' ? 'dark' : 'light'));
     };
 
+    const handleChange = (e) => {
+        setFormData({
+            ...formData,
+            [e.target.name]: e.target.value
+        });
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setLoading(true);
+        setStatus({ type: '', message: '' });
+
+        try {
+            const response = await fetch('http://localhost:5000/api/contact', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                setStatus({ type: 'success', message: 'Message sent successfully!' });
+                setFormData({ name: '', email: '', message: '' });
+            } else {
+                setStatus({ type: 'error', message: data.message || 'Failed to send message' });
+            }
+        } catch (error) {
+            setStatus({ type: 'error', message: 'Failed to send message. Please try again.' });
+        }
+
+        setLoading(false);
+    };
+
     return (
         <div className="footer-container">
             {!isContactPage && (
@@ -28,10 +71,42 @@ function Footer() {
                 {!isContactPage && (
                     <div className="footer-top">
                         <div className="contact-form-container">
-                            <input type="text" placeholder="Your Name" />
-                            <input type="email" placeholder="E-mail" />
-                            <textarea placeholder="Type your message..."></textarea>
-                            <button className="send-message-btn">Send Message</button>
+                            {status.message && (
+                                <div className={`${status.type}-message`}>
+                                    {status.message}
+                                </div>
+                            )}
+                            <form onSubmit={handleSubmit}>
+                                <input
+                                    type="text"
+                                    name="name"
+                                    placeholder="Your Name"
+                                    value={formData.name}
+                                    onChange={handleChange}
+                                    required
+                                />
+                                <input
+                                    type="email"
+                                    name="email"
+                                    placeholder="E-mail"
+                                    value={formData.email}
+                                    onChange={handleChange}
+                                    required
+                                />
+                                <textarea
+                                    name="message"
+                                    placeholder="Type your message..."
+                                    value={formData.message}
+                                    onChange={handleChange}
+                                    required
+                                ></textarea>
+                                <button 
+                                    className="send-message-btn"
+                                    disabled={loading}
+                                >
+                                    {loading ? 'Sending...' : 'Send Message'}
+                                </button>
+                            </form>
                         </div>
                     </div>
                 )}

@@ -1710,3 +1710,38 @@ input:checked + .slider:before {
     background: linear-gradient(to bottom, var(--darkBlue), var(--blue));
     color: var(--white);
 }
+
+/* Success and Error Messages */
+.success-message,
+.error-message {
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    text-align: center;
+    width: 100%;
+}
+
+.success-message {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.error-message {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+/* Dark Mode Styles for Messages */
+[data-theme="dark"] .success-message {
+    background-color: #1e4620;
+    color: #d4edda;
+    border-color: #2a5a2a;
+}
+
+[data-theme="dark"] .error-message {
+    background-color: #4a1c1c;
+    color: #f8d7da;
+    border-color: #5a2a2a;
+}
