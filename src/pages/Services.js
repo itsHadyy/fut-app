@@ -398,7 +398,9 @@ function Services() {
                         <div className='banner-content'>
                             <h1>You have a problem, <br />We <b>Build</b> a <b>Solution</b></h1>
                             <p>Innovate, Integrate, Inspire: Your Software Solutions Partner.</p>
-                            <button className="btn">Let's Talk!</button>
+                            <Link to="/contact">
+                                <button className="btn">Let's Talk!</button>
+                            </Link>
                         </div>
                     </div>
                 );
@@ -408,7 +410,9 @@ function Services() {
                         <div className='banner-content'>
                             <h1><b>Customize Yours Now!</b></h1>
                             <p>Innovate, Integrate, Inspire: Your Software Solutions Partner.</p>
-                            <button className="btn">Let's Talk!</button>
+                            <Link to="/contact">
+                                <button className="btn">Let's Talk!</button>
+                            </Link>
                         </div>
                     </div>
                 );
@@ -418,7 +422,9 @@ function Services() {
                         <div className='banner-content'>
                             <h1><b>Build</b> Your <br /> Home <b>Smart</b></h1>
                             <p>Innovate, Integrate, Inspire: Your Software Solutions Partner.</p>
-                            <button className="btn">Let's Talk!</button>
+                            <Link to="/contact">
+                                <button className="btn">Let's Talk!</button>
+                            </Link>
                         </div>
                     </div>
                 );

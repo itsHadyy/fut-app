@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 function About() {
     return (
         <div>
@@ -6,7 +7,9 @@ function About() {
                 <div className="about-banner">
                     <h1>Innovative Solutions <br />For The Future</h1>
                     <p>Innovate, Integrate, Inspire: Your Software Solutions Partner.</p>
-                    <button className="btn">Let's Talk!</button>
+                    <Link to="/contact">
+                        <button className="btn">Let's Talk!</button>
+                    </Link>
                 </div>
             </div>
 

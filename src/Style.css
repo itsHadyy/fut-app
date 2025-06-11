@@ -270,8 +270,6 @@ h2 {
     padding: 60px 80px;
     border-radius: 20px;
     margin: 40px auto;
-    max-width: 1200px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -305,6 +303,7 @@ h2 {
 .testimonial-left {
     flex: 1;
     max-width: 50%;
+    text-align: center;
 }
 
 .testimonial-logo {
@@ -1603,7 +1602,7 @@ ol ul {
     grid-column: span 2;
 }
 
-.color-palette-title{
+.color-palette-title {
     grid-column: span 2;
     position: absolute;
     left: 50%;
@@ -1612,36 +1611,37 @@ ol ul {
     font-size: 46px;
 }
 
-.prototype-container{
+.prototype-container {
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.phases li{
+.phases li {
     color: var(--blue);
     font-weight: 600;
     margin-bottom: 20px;
 }
-.phases li span{
+
+.phases li span {
     color: var(--black);
     font-weight: 100;
 }
 
-.product-images{
+.product-images {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     gap: 20px;
 }
 
-.website-img{
+.website-img {
     grid-template-columns: repeat(2, 1fr);
 }
 
-.website-img img{
+.website-img img {
     max-width: 620px;
 }
 
-.product-images img{
+.product-images img {
     max-width: 260px;
 }

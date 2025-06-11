@@ -61,12 +61,14 @@ function Home() {
             <div className="home01">
                 <div>
                     <p>At FutApp, we are a dynamic and innovative software development company committed to transforming ideas into reality. Our journey began in 2023, when a group of passionate tech enthusiasts decided to combine their expertise and vision to create solutions that drive digital transformation. From our humble beginnings, we have grown into a dedicated team of skilled developers, designers, and project managers who work tirelessly to deliver top-notch software solutions.</p>
-                    <Link to="/">Learn More <img src="media/assets/arrow02.png" alt="arrow" /></Link>
+                    <Link to="/about">Learn More <img src="media/assets/arrow02.png" alt="arrow" /></Link>
                 </div>
                 <div className="home-banner">
                     <h1>Innovative Solutions For The Future</h1>
                     <p>Innovate, Integrate, Inspire: Your Software Solutions Partner.</p>
-                    <button className="btn">Let's Talk!</button>
+                    <Link to="/contact">
+                        <button className="btn">Let's Talk!</button>
+                    </Link>
                 </div>
             </div>
 
@@ -87,7 +89,7 @@ function Home() {
                         <span className="btn">iOS</span>
                         <span className="btn">Mobile</span>
                     </div>
-                    <Link to="/">View Projects <img src="media/assets/arrow02.png" alt="arrow" /></Link>
+                    <Link to="/products">View Projects <img src="media/assets/arrow02.png" alt="arrow" /></Link>
                 </div>
 
                 <div className="flex-img">
@@ -96,7 +98,7 @@ function Home() {
             </div>
 
             <div className="home02">
-                <Link to="/"><button className="btn">View All Products</button></Link>
+                <Link to="/products"><button className="btn">View All Products</button></Link>
             </div>
 
             <div className="home02">
@@ -139,7 +141,7 @@ function Home() {
                     <div className="testimonial-item">
                         <div className="testimonial-left">
                             <div className="testimonial-logo">
-                                <span className="logo-p">P</span><span className="logo-re">RE</span> <span className="logo-relive">Relive.</span>
+                                <img src="media/Home/Frame 265.png" alt="Testimonial Logo"/>
                             </div>
                             <div className="testimonial-text">
                                 <p className="testimonial-title">CEO</p>
@@ -149,8 +151,8 @@ function Home() {
                             </div>
                         </div>
                         <div className="testimonial-right">
-                            <img src="media/Home/testimonial-phones.png" alt="FutApp on phones" />
-                            <p className="powered-by">Powered by <img src="media/assets/futapp-logo-small.png" alt="FutApp Logo" /></p>
+                            <img src="media/Home/Frame 264.png" alt="FutApp on phones" />
+                            <p className="powered-by">Powered by <img src="media/home/Frame 264.png" alt="FutApp Logo" /></p>
                         </div>
                     </div>
 
