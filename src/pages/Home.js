@@ -11,8 +11,7 @@ function Home() {
     const showTestimonial = (index) => {
         const testimonialContent = document.querySelector('.testimonial-content');
         if (testimonialContent) {
-            const offset = -index * 100;
-            testimonialContent.style.transform = `translateX(${offset}%)`;
+            testimonialContent.style.transform = `translateX(-${index * 100}%)`;
         }
 
         // Update active dot
@@ -35,9 +34,7 @@ function Home() {
         // Add event listeners to dots
         paginationDots.current.forEach((dot, index) => {
             if (dot) {
-                dot.addEventListener('click', () => {
-                    showTestimonial(index);
-                });
+                dot.addEventListener('click', () => showTestimonial(index));
             }
         });
 
@@ -47,14 +44,12 @@ function Home() {
         // Clean up event listeners
         return () => {
             paginationDots.current.forEach((dot, index) => {
-                 if (dot) {
-                    dot.removeEventListener('click', () => {
-                        showTestimonial(index);
-                    });
+                if (dot) {
+                    dot.removeEventListener('click', () => showTestimonial(index));
                 }
             });
         };
-    }, [currentTestimonialIndex]); // Rerun effect if currentTestimonialIndex changes (though showTestimonial handles it)
+    }, []); // Remove currentTestimonialIndex from dependencies to prevent unnecessary re-renders
 
     return (
         <div>
@@ -137,7 +132,6 @@ function Home() {
             <h1 className="section-title">Testimonials</h1>
             <div className="testimonials">
                 <div className="testimonial-content">
-                    {/* Testimonial Item 1 */}
                     <div className="testimonial-item">
                         <div className="testimonial-left">
                             <div className="testimonial-logo">
@@ -147,50 +141,43 @@ function Home() {
                                 <p className="testimonial-title">CEO</p>
                                 <p className="testimonial-name">"Name of person 1"</p>
                                 <p className="testimonial-quote">It was a Seamless Experience with FutApp <br /> The Quality and Timeframe was Perfect <br /> Thank you FutApp for this amazing Experience</p>
-                                <Link to="/">View Project</Link>
+                                <Link to="/portfolio">View Project</Link>
                             </div>
                         </div>
                         <div className="testimonial-right">
                             <img src="media/Home/Frame 264.png" alt="FutApp on phones" />
-                            <p className="powered-by">Powered by <img src="media/home/Frame 264.png" alt="FutApp Logo" /></p>
                         </div>
                     </div>
-
-                    {/* Testimonial Item 2 */}
                     <div className="testimonial-item">
-                         <div className="testimonial-left">
+                        <div className="testimonial-left">
                             <div className="testimonial-logo">
-                                <span className="logo-p">P</span><span className="logo-re">RE</span> <span className="logo-relive">Relive.</span>
+                                <img src="media/Home/Frame 265.png" alt="Testimonial Logo"/>
                             </div>
                             <div className="testimonial-text">
-                                <p className="testimonial-title">Client</p>
-                                <p className="testimonial-name">"Name of person 2"</p>
-                                <p className="testimonial-quote">FutApp delivered exceptional results. Their team was professional and highly skilled. We are very happy with the final product.</p>
-                                <Link to="/">View Project</Link>
+                                <p className="testimonial-title">CEO</p>
+                                <p className="testimonial-name">"Name of person 1"</p>
+                                <p className="testimonial-quote">It was a Seamless Experience with FutApp <br /> The Quality and Timeframe was Perfect <br /> Thank you FutApp for this amazing Experience</p>
+                                <Link to="/portfolio">View Project</Link>
                             </div>
                         </div>
                         <div className="testimonial-right">
-                            <img src="media/Home/testimonial-phones.png" alt="FutApp on phones" />
-                            <p className="powered-by">Powered by <img src="media/assets/futapp-logo-small.png" alt="FutApp Logo" /></p>
+                            <img src="media/Home/Frame 264.png" alt="FutApp on phones" />
                         </div>
                     </div>
-
-                    {/* Testimonial Item 3 */}
                     <div className="testimonial-item">
-                         <div className="testimonial-left">
+                        <div className="testimonial-left">
                             <div className="testimonial-logo">
-                                <span className="logo-p">P</span><span className="logo-re">RE</span> <span className="logo-relive">Relive.</span>
+                                <img src="media/Home/Frame 265.png" alt="Testimonial Logo"/>
                             </div>
                             <div className="testimonial-text">
-                                <p className="testimonial-title">Partner</p>
-                                <p className="testimonial-name">"Name of person 3"</p>
-                                <p className="testimonial-quote">Working with FutApp was a great experience. They are innovative and responsive. Highly recommend their services.</p>
-                                <Link to="/">View Project</Link>
+                                <p className="testimonial-title">CEO</p>
+                                <p className="testimonial-name">"Name of person 1"</p>
+                                <p className="testimonial-quote">It was a Seamless Experience with FutApp <br /> The Quality and Timeframe was Perfect <br /> Thank you FutApp for this amazing Experience</p>
+                                <Link to="/portfolio">View Project</Link>
                             </div>
                         </div>
                         <div className="testimonial-right">
-                            <img src="media/Home/testimonial-phones.png" alt="FutApp on phones" />
-                            <p className="powered-by">Powered by <img src="media/assets/futapp-logo-small.png" alt="FutApp Logo" /></p>
+                            <img src="media/Home/Frame 264.png" alt="FutApp on phones" />
                         </div>
                     </div>
 
