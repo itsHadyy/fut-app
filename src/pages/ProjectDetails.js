@@ -179,59 +179,74 @@ const ProjectDetails = () => {
                     {project.type === 'mobile' ? 'Creating a mobile application involves several key phases:' : 'Creating a website involves several key phases:'}
                 </h2>
 
-                <div className='phases'>
-                    <ol>
-                        {project.type === 'mobile' ? (
-                            <>
-                                <li>
-                                    Concept & Planning
-                                    <span> - Defining the app's purpose, features, and target audience. Gathering requirements and sketching out initial ideas.</span>
-                                </li>
-                                <li>
-                                    UI/UX Design
-                                    <span> - Designing an intuitive and visually appealing interface that ensures a seamless user experience for owners, visitors, and service providers.</span>
-                                </li>
-                                <li>
-                                    Development & Testing
-                                    <span> - Writing the code, integrating features like gate pass management, community news updates, reservations, and complaints. Conducting thorough testing to ensure functionality, security, and reliability.</span>
-                                </li>
-                                <li>
-                                    Deployment & Publishing
-                                    <span> - Preparing the application for release on the relevant platforms (iOS, Android, web). Setting up backend services, analytics, and security measures. Publishing the app and promoting it to the users.</span>
-                                </li>
-                            </>
-                        ) : (
-                            <>
-                                <li>
-                                    Discovery & Planning
-                                    <span> - Understanding your business needs, target audience, and goals. Creating a detailed project roadmap and content strategy.</span>
-                                </li>
-                                <li>
-                                    Design & Wireframing
-                                    <span> - Creating visual designs and wireframes that align with your brand identity. Developing a responsive layout that works across all devices.</span>
-                                </li>
-                                <li>
-                                    Development & Integration
-                                    <span> - Building the website using modern technologies. Implementing features, content management systems, and third-party integrations.</span>
-                                </li>
-                                <li>
-                                    Testing & Launch
-                                    <span> - Conducting thorough testing for functionality, performance, and security. Deploying the website and ensuring everything runs smoothly.</span>
-                                </li>
-                            </>
-                        )}
-                    </ol>
-                </div>
+            </div>
 
-                {project.productImages && project.productImages.length > 0 && (
+            <div className='phases'>
+                <ol>
+                    {project.type === 'mobile' ? (
+                        <>
+                            <li>
+                                Concept & Planning
+                                <span> - Defining the app's purpose, features, and target audience. Gathering requirements and sketching out initial ideas.</span>
+                            </li>
+                            <li>
+                                UI/UX Design
+                                <span> - Designing an intuitive and visually appealing interface that ensures a seamless user experience for owners, visitors, and service providers.</span>
+                            </li>
+                            <li>
+                                Development & Testing
+                                <span> - Writing the code, integrating features like gate pass management, community news updates, reservations, and complaints. Conducting thorough testing to ensure functionality, security, and reliability.</span>
+                            </li>
+                            <li>
+                                Deployment & Publishing
+                                <span> - Preparing the application for release on the relevant platforms (iOS, Android, web). Setting up backend services, analytics, and security measures. Publishing the app and promoting it to the users.</span>
+                            </li>
+                        </>
+                    ) : (
+                        <>
+                            <li>
+                                Idea & Planning
+                                <span> - Define the website's purpose, target audience, and key functionalities</span>
+                            </li>
+                            <li>
+                                Design & Wireframing
+                                <span> - Sketch layouts and create mockups for the website's look and user experience.</span>
+                            </li>
+                            <li>
+                                Development
+                                <span> - Choose a platform (e.g., WordPress, custom coding) and start building using HTML, CSS, JavaScript, and backend technologies.</span>
+                            </li>
+                            <li>
+                                Content Creation
+                                <span> - Write compelling text, source or design visuals, and ensure the website conveys the right message.</span>
+                            </li>
+                            <li>
+                                Testing & Optimization
+                                <span> - Check for bugs, responsiveness, and performance to ensure smooth functionality.</span>
+                            </li>
+                            <li>
+                                Deployment
+                                <span> - Launch the website on a hosting provider and set up domain configurations.</span>
+                            </li>
+                            <li>
+                                Maintenance & Updates
+                                <span> - Regularly update content, security patches, and performance improvements.</span>
+                            </li>
+                        </>
+                    )}
+                </ol>
+            </div>
+
+            {project.productImages && project.productImages.length > 0 && (
+                <div>
+                    <h2>Product Images</h2>
                     <div className={`product-images ${project.type === 'website' ? 'website-img' : ''}`}>
-                        <h2>Product Images</h2>
                         {project.productImages.map((image, index) => (
                             <img key={index} src={image} alt={`Product ${index + 1}`} />
                         ))}
                     </div>
-                )}
-            </div>
+                </div>
+            )}
         </div>
     );
 }

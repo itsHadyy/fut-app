@@ -89,7 +89,7 @@ function Portfolio() {
                             </div>
 
                             <div className="flex-img">
-                                <img src={'media/Portfolio/Mobile/PRE.png' || project.image} alt={project.name} />
+                                <img src={project.image} alt={project.name} />
                             </div>
                         </div>
                     ))}
