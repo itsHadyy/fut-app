@@ -37,7 +37,7 @@ function AdminDashboard() {
     const [newFeature, setNewFeature] = useState({ title: '', description: '' });
     const [newTech, setNewTech] = useState('');
     const [newPlatform, setNewPlatform] = useState('');
-    const [newProjectImageUrl, setNewProjectImageUrl] = useState(''); 
+    const [newProjectImageUrl, setNewProjectImageUrl] = useState('');
     const [newPhase, setNewPhase] = useState('');
     const [newColor, setNewColor] = useState('');
 
@@ -217,13 +217,13 @@ function AdminDashboard() {
 
     const validateForm = () => {
         const errors = {};
-        
+
         if (!formData.name.trim()) errors.name = 'Project name is required';
         if (!formData.category.trim()) errors.category = 'Project category is required';
         if (!formData.description.trim()) errors.description = 'Project description is required';
         if (!formData.banner.trim()) errors.banner = 'Banner image URL is required';
         if (!formData.intro.trim()) errors.intro = 'Project introduction is required';
-        
+
         // Features are now optional
         if (formData.features.length > 0) {
             formData.features.forEach((feature, index) => {
@@ -291,7 +291,7 @@ function AdminDashboard() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        
+
         if (!validateForm()) {
             return;
         }
@@ -304,7 +304,7 @@ function AdminDashboard() {
             };
 
             await addDoc(collection(db, 'projects'), projectData);
-            
+
             // Reset form
             setFormData({
                 name: '',
@@ -321,7 +321,7 @@ function AdminDashboard() {
                 align: 'left',
             });
             setValidationErrors({});
-            
+
             // Refresh projects list
             fetchProjects();
         } catch (error) {
@@ -351,13 +351,13 @@ function AdminDashboard() {
                 <div className="preview-header">
                     <h3>Preview</h3>
                     <div className="preview-tabs">
-                        <button 
+                        <button
                             className={previewCollection === 'portfolio' ? 'active' : ''}
                             onClick={() => setPreviewCollection('portfolio')}
                         >
                             Portfolio View
                         </button>
-                        <button 
+                        <button
                             className={previewCollection === 'products' ? 'active' : ''}
                             onClick={() => setPreviewCollection('products')}
                         >
@@ -401,7 +401,7 @@ function AdminDashboard() {
                 <div className="form-header">
                     <h2>{editingProject ? 'Edit Project' : 'Add New Project'}</h2>
                     <div className="form-actions">
-                        <button 
+                        <button
                             className="preview-btn"
                             onClick={() => setPreviewMode(!previewMode)}
                         >
@@ -421,7 +421,7 @@ function AdminDashboard() {
                             <input
                                 type="text"
                                 value={formData.name}
-                                onChange={(e) => setFormData({...formData, name: e.target.value})}
+                                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                                 placeholder="Enter project name"
                             />
                         </div>
@@ -434,7 +434,7 @@ function AdminDashboard() {
                             <input
                                 type="text"
                                 value={formData.category}
-                                onChange={(e) => setFormData({...formData, category: e.target.value})}
+                                onChange={(e) => setFormData({ ...formData, category: e.target.value })}
                                 placeholder="Enter project category (e.g., community app)"
                             />
                         </div>
@@ -446,8 +446,21 @@ function AdminDashboard() {
                             </label>
                             <textarea
                                 value={formData.description}
-                                onChange={(e) => setFormData({...formData, description: e.target.value})}
+                                onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                                 placeholder="Enter project description"
+                            />
+                        </div>
+
+                        <div className="form-group">
+                            <label>
+                                Project Image *
+                                {validationErrors.description && <span className="error">{validationErrors.image}</span>}
+                            </label>
+                            <input
+                                type='text'
+                                value={formData.image}
+                                onChange={(e) => setFormData({ ...formData, image: e.target.value })}
+                                placeholder="Enter project image"
                             />
                         </div>
                     </div>
@@ -462,7 +475,7 @@ function AdminDashboard() {
                                         type="radio"
                                         value="mobile"
                                         checked={formData.type === 'mobile'}
-                                        onChange={(e) => setFormData({...formData, type: e.target.value})}
+                                        onChange={(e) => setFormData({ ...formData, type: e.target.value })}
                                     />
                                     <span className="radio-text">Mobile Application</span>
                                 </label>
@@ -471,7 +484,7 @@ function AdminDashboard() {
                                         type="radio"
                                         value="website"
                                         checked={formData.type === 'website'}
-                                        onChange={(e) => setFormData({...formData, type: e.target.value})}
+                                        onChange={(e) => setFormData({ ...formData, type: e.target.value })}
                                     />
                                     <span className="radio-text">Website</span>
                                 </label>
@@ -481,16 +494,16 @@ function AdminDashboard() {
                         <div className="form-group">
                             <label>Display Location</label>
                             <div className="collection-selector">
-                                <div 
+                                <div
                                     className={`collection-option ${formData.collection === 'portfolio' ? 'active' : ''}`}
-                                    onClick={() => setFormData({...formData, collection: 'portfolio'})}
+                                    onClick={() => setFormData({ ...formData, collection: 'portfolio' })}
                                 >
                                     <h4>Portfolio</h4>
                                     <p>Showcase your work in the portfolio section</p>
                                 </div>
-                                <div 
+                                <div
                                     className={`collection-option ${formData.collection === 'products' ? 'active' : ''}`}
-                                    onClick={() => setFormData({...formData, collection: 'products'})}
+                                    onClick={() => setFormData({ ...formData, collection: 'products' })}
                                 >
                                     <h4>Products</h4>
                                     <p>List your product in the products section</p>
@@ -507,7 +520,7 @@ function AdminDashboard() {
                                         name="alignment"
                                         value="left"
                                         checked={formData.align === 'left'}
-                                        onChange={(e) => setFormData({...formData, align: e.target.value})}
+                                        onChange={(e) => setFormData({ ...formData, align: e.target.value })}
                                     />
                                     <span className="radio-text">Left</span>
                                 </label>
@@ -517,7 +530,7 @@ function AdminDashboard() {
                                         name="alignment"
                                         value="right"
                                         checked={formData.align === 'right'}
-                                        onChange={(e) => setFormData({...formData, align: e.target.value})}
+                                        onChange={(e) => setFormData({ ...formData, align: e.target.value })}
                                     />
                                     <span className="radio-text">Right</span>
                                 </label>
@@ -535,7 +548,7 @@ function AdminDashboard() {
                             <input
                                 type="text"
                                 value={formData.banner}
-                                onChange={(e) => setFormData({...formData, banner: e.target.value})}
+                                onChange={(e) => setFormData({ ...formData, banner: e.target.value })}
                                 placeholder="Enter banner image URL"
                             />
                             {formData.banner && (
@@ -552,7 +565,7 @@ function AdminDashboard() {
                             </label>
                             <textarea
                                 value={formData.intro}
-                                onChange={(e) => setFormData({...formData, intro: e.target.value})}
+                                onChange={(e) => setFormData({ ...formData, intro: e.target.value })}
                                 placeholder="Enter project introduction"
                             />
                         </div>
@@ -570,7 +583,7 @@ function AdminDashboard() {
                                         onChange={(e) => {
                                             const newFeatures = [...formData.features];
                                             newFeatures[index].title = e.target.value;
-                                            setFormData({...formData, features: newFeatures});
+                                            setFormData({ ...formData, features: newFeatures });
                                         }}
                                         placeholder="Feature title"
                                     />
@@ -579,7 +592,7 @@ function AdminDashboard() {
                                         onChange={(e) => {
                                             const newFeatures = [...formData.features];
                                             newFeatures[index].description = e.target.value;
-                                            setFormData({...formData, features: newFeatures});
+                                            setFormData({ ...formData, features: newFeatures });
                                         }}
                                         placeholder="Feature description"
                                     />
@@ -588,7 +601,7 @@ function AdminDashboard() {
                                         className="remove-btn"
                                         onClick={() => {
                                             const newFeatures = formData.features.filter((_, i) => i !== index);
-                                            setFormData({...formData, features: newFeatures});
+                                            setFormData({ ...formData, features: newFeatures });
                                         }}
                                     >
                                         Remove Feature
@@ -620,7 +633,7 @@ function AdminDashboard() {
                                         onChange={(e) => {
                                             const newPlatforms = [...formData.platforms];
                                             newPlatforms[index] = e.target.value;
-                                            setFormData({...formData, platforms: newPlatforms});
+                                            setFormData({ ...formData, platforms: newPlatforms });
                                         }}
                                         placeholder="Enter platform"
                                     />
@@ -628,7 +641,7 @@ function AdminDashboard() {
                                         type="button"
                                         onClick={() => {
                                             const newPlatforms = formData.platforms.filter((_, i) => i !== index);
-                                            setFormData({...formData, platforms: newPlatforms});
+                                            setFormData({ ...formData, platforms: newPlatforms });
                                         }}
                                     >
                                         Remove
@@ -657,7 +670,7 @@ function AdminDashboard() {
                             <input
                                 type="text"
                                 value={formData.primaryColor}
-                                onChange={(e) => setFormData({...formData, primaryColor: e.target.value})}
+                                onChange={(e) => setFormData({ ...formData, primaryColor: e.target.value })}
                                 placeholder="#FF0000"
                             />
                             <div className="color-preview" style={{ backgroundColor: formData.primaryColor }}></div>
@@ -667,7 +680,7 @@ function AdminDashboard() {
                             <input
                                 type="text"
                                 value={formData.secondaryColor}
-                                onChange={(e) => setFormData({...formData, secondaryColor: e.target.value})}
+                                onChange={(e) => setFormData({ ...formData, secondaryColor: e.target.value })}
                                 placeholder="#00FF00"
                             />
                             <div className="color-preview" style={{ backgroundColor: formData.secondaryColor }}></div>
@@ -677,7 +690,7 @@ function AdminDashboard() {
                             <input
                                 type="text"
                                 value={formData.accentColor}
-                                onChange={(e) => setFormData({...formData, accentColor: e.target.value})}
+                                onChange={(e) => setFormData({ ...formData, accentColor: e.target.value })}
                                 placeholder="#0000FF"
                             />
                             <div className="color-preview" style={{ backgroundColor: formData.accentColor }}></div>
@@ -689,7 +702,7 @@ function AdminDashboard() {
                         {validationErrors.prototype && <span className="error">{validationErrors.prototype}</span>}
                         <textarea
                             value={formData.prototype}
-                            onChange={(e) => setFormData({...formData, prototype: e.target.value})}
+                            onChange={(e) => setFormData({ ...formData, prototype: e.target.value })}
                             placeholder="Enter prototype iframe code"
                         />
                     </div>
@@ -706,7 +719,7 @@ function AdminDashboard() {
                                         onChange={(e) => {
                                             const newImages = [...formData.productImages];
                                             newImages[index] = e.target.value;
-                                            setFormData({...formData, productImages: newImages});
+                                            setFormData({ ...formData, productImages: newImages });
                                         }}
                                         placeholder="Enter image URL"
                                     />
@@ -714,7 +727,7 @@ function AdminDashboard() {
                                         type="button"
                                         onClick={() => {
                                             const newImages = formData.productImages.filter((_, i) => i !== index);
-                                            setFormData({...formData, productImages: newImages});
+                                            setFormData({ ...formData, productImages: newImages });
                                         }}
                                     >
                                         Remove
@@ -808,14 +821,14 @@ function AdminDashboard() {
                         <div className="filter-sections">
                             <h3>View Projects By:</h3>
                             <div className="tab-buttons">
-                                <button 
-                                    className={activeTab === 'portfolio' ? 'active' : ''} 
+                                <button
+                                    className={activeTab === 'portfolio' ? 'active' : ''}
                                     onClick={() => setActiveTab('portfolio')}
                                 >
                                     Portfolio
                                 </button>
-                                <button 
-                                    className={activeTab === 'products' ? 'active' : ''} 
+                                <button
+                                    className={activeTab === 'products' ? 'active' : ''}
                                     onClick={() => setActiveTab('products')}
                                 >
                                     Products
@@ -823,14 +836,14 @@ function AdminDashboard() {
                             </div>
 
                             <div className="type-buttons">
-                                <button 
-                                    className={activeType === 'mobile' ? 'active' : ''} 
+                                <button
+                                    className={activeType === 'mobile' ? 'active' : ''}
                                     onClick={() => setActiveType('mobile')}
                                 >
                                     Mobile Applications
                                 </button>
-                                <button 
-                                    className={activeType === 'websites' ? 'active' : ''} 
+                                <button
+                                    className={activeType === 'websites' ? 'active' : ''}
                                     onClick={() => setActiveType('websites')}
                                 >
                                     Websites

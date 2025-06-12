@@ -148,20 +148,23 @@ const ProjectDetails = () => {
                         </div>
                     )}
 
-                    {project.primaryColor && project.secondaryColor && project.accentColor && (
+                    {project.colors && project.colors.length > 0 && (
                         <section>
                             <div className="color-palette-container">
                                 <div className="color-grid">
                                     <h2 className="color-palette-title">Colors</h2>
-                                    <div className="color-block" style={{ backgroundColor: project.primaryColor }}>
-                                        <span style={{ color: getContrastTextColor(project.primaryColor) }}>{project.primaryColor}</span>
-                                    </div>
-                                    <div className="color-block" style={{ backgroundColor: project.secondaryColor }}>
-                                        <span style={{ color: getContrastTextColor(project.secondaryColor) }}>{project.secondaryColor}</span>
-                                    </div>
-                                    <div className="color-block" style={{ backgroundColor: project.accentColor }}>
-                                        <span style={{ color: getContrastTextColor(project.accentColor) }}>{project.accentColor}</span>
-                                    </div>
+                                    {project.colors.map((color, index) => (
+                                        <div 
+                                            key={index} 
+                                            className="color-block" 
+                                            style={{ 
+                                                backgroundColor: color,
+                                                gridColumn: project.colors.length === 2 ? 'span 2' : 'auto'
+                                            }}
+                                        >
+                                            <span style={{ color: getContrastTextColor(color) }}>{color}</span>
+                                        </div>
+                                    ))}
                                 </div>
                             </div>
                         </section>

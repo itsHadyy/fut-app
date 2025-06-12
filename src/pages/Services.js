@@ -1,36 +1,58 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'; // Assuming you are using React Router v6
+import { db } from '../firebaseConfig';
+import { collection, getDocs, query, where } from 'firebase/firestore';
 
 import { Link } from "react-router-dom";
 
 function Services() {
     const [activeService, setActiveService] = useState('mobile');
     const navigate = useNavigate(); // Initialize navigate hook
+    const [projects, setProjects] = useState({
+        mobile: [],
+        websites: []
+    });
+    const [loading, setLoading] = useState(true);
 
-    // Placeholder project data - replace with your actual data
-    const projects = {
-        mobile: [
-            { id: 1, name: 'PRE Developments', image: 'media/Portfolio/Mobile/PRE.png' },
-            { id: 2, name: 'JDAR Developments', image: 'media/Portfolio/Mobile/JDAR.png' },
-            { id: 3, name: 'al ahly sabour Developments', image: 'media/Portfolio/Mobile/ahly.png' },
-            { id: 4, name: 'Buzz Mobility', image: 'media/Portfolio/Mobile/Buzz.png' },
-            { id: 5, name: 'Orange', image: 'media/Portfolio/Mobile/orange.png' },
-            { id: 6, name: 'Vinde', image: 'media/Portfolio/Mobile/vinde.png' },
-        ],
-        websites: [
-            { id: 7, name: 'Arab Dairy Website', image: 'media/Portfolio/Websites/Arab Dairy.png' },
-            { id: 8, name: 'Orange Website', image: 'media/Portfolio/Websites/Orange.png' },
-            { id: 9, name: 'Pioneers Webite', image: 'media/Portfolio/Websites/Pioneers.png' },
-        ],
-        smart_systems: [
-            { id: 10, name: 'Smart Gates', image: 'media/Services/Systems/smart.png' },
-            { id: 11, name: 'Smart Mirrors', image: 'media/Services/Systems/smart.png' },
-            { id: 12, name: 'Smart Locks', image: 'media/Services/Systems/smart.png' },
-        ],
-    };
+    useEffect(() => {
+        const fetchProjects = async () => {
+            try {
+                const projectsRef = collection(db, 'projects');
+                const snapshot = await getDocs(projectsRef);
+                const projectsData = {
+                    mobile: [],
+                    websites: []
+                };
+
+                snapshot.forEach((doc) => {
+                    const project = { id: doc.id, ...doc.data() };
+                    if (project.type === 'mobile') {
+                        projectsData.mobile.push({
+                            id: doc.id,
+                            name: project.name,
+                            image: project.image
+                        });
+                    } else if (project.type === 'website') {
+                        projectsData.websites.push({
+                            id: doc.id,
+                            name: project.name,
+                            image: project.image
+                        });
+                    }
+                });
+
+                setProjects(projectsData);
+                setLoading(false);
+            } catch (error) {
+                console.error('Error fetching projects:', error);
+                setLoading(false);
+            }
+        };
+
+        fetchProjects();
+    }, []);
 
     const handleProjectClick = (projectId) => {
-        // Navigate to the project details page
         navigate(`/projects/${projectId}`);
     };
 
@@ -147,14 +169,20 @@ function Services() {
                         </div>
                         <div className="projects-section">
                             <h2>Check out our work!</h2>
-                            <div className="projects-slideshow mobile-projects">
-                                {projects.mobile.map(project => (
-                                    <div key={project.id} className="project-item" onClick={() => handleProjectClick(project.id)}>
-                                        <img src={project.image} alt={project.name} />
-                                        <p>{project.name}</p>
-                                    </div>
-                                ))}
-                            </div>
+                            {loading ? (
+                                <div className="loading">
+                                    <h1>Loading...</h1>
+                                </div>
+                            ) : (
+                                <div className="projects-slideshow mobile-projects">
+                                    {projects.mobile.map(project => (
+                                        <div key={project.id} className="project-item" onClick={() => handleProjectClick(project.id)}>
+                                            <img src={project.image} alt={project.name} />
+                                            <p>{project.name}</p>
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
                         </div>
                     </>
                 );
@@ -257,14 +285,20 @@ function Services() {
                         </div>
                         <div className="projects-section">
                             <h2>Check out our work!</h2>
-                            <div className="projects-slideshow mobile-projects">
-                                {projects.websites.map(project => (
-                                    <div key={project.id} className="project-item" onClick={() => handleProjectClick(project.id)}>
-                                        <img src={project.image} alt={project.name} />
-                                        <p>{project.name}</p>
-                                    </div>
-                                ))}
-                            </div>
+                            {loading ? (
+                                <div className="loading">
+                                    <h1>Loading...</h1>
+                                </div>
+                            ) : (
+                                <div className="projects-slideshow mobile-projects">
+                                    {projects.websites.map(project => (
+                                        <div key={project.id} className="project-item" onClick={() => handleProjectClick(project.id)}>
+                                            <img src={project.image} alt={project.name} />
+                                            <p>{project.name}</p>
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
                         </div>
                     </>
                 );
