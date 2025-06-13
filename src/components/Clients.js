@@ -38,14 +38,6 @@ function Clients() {
                 <img src="media/clients/logo05.svg" alt="Client Logo 5" />
                 <img src="media/clients/logo06.png" alt="Client Logo 6" />
                 <img src="media/clients/logo07.png" alt="Client Logo 7" />
-                {/* Duplicate images for seamless looping */}
-                <img src="media/clients/logo01.png" alt="Client Logo 1" />
-                <img src="media/clients/logo02.png" alt="Client Logo 2" />
-                <img src="media/clients/logo03.png" alt="Client Logo 3" />
-                <img src="media/clients/logo04.png" alt="Client Logo 4" />
-                <img src="media/clients/logo05.svg" alt="Client Logo 5" />
-                <img src="media/clients/logo06.png" alt="Client Logo 6" />
-                <img src="media/clients/logo07.png" alt="Client Logo 7" />
             </div>
         </div>
     );

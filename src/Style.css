@@ -183,34 +183,56 @@ a {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 30px 0px;
+    padding: 30px 100px;
     margin: 40px 0;
-    overflow: hidden;
 }
 
 .clients-scroll-container {
     display: flex;
-    gap: 50px;
-    white-space: nowrap;
-    overflow-x: hidden;
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-}
-
-.clients-scroll-container::-webkit-scrollbar {
-    display: none;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
 }
 
 .clients-scroll-container img {
-    flex-shrink: 0;
-    height: 60px;
+    height: auto;
     width: auto;
-    display: inline-block;
 }
 
-@keyframes scroll {
-    from { transform: translateX(0); }
-    to { transform: translateX(-100%); }
+@media (max-width: 992px) {
+    .clients {
+        padding: 30px 0px;
+        overflow: hidden;
+    }
+
+    .clients-scroll-container {
+        gap: 60px;
+        white-space: nowrap;
+        overflow-x: hidden;
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+
+    .clients-scroll-container::-webkit-scrollbar {
+        display: none;
+    }
+
+    .clients-scroll-container img {
+        flex-shrink: 0;
+        height: 30px;
+        width: auto;
+        display: inline-block;
+    }
+
+    @keyframes scroll {
+        from {
+            transform: translateX(0);
+        }
+
+        to {
+            transform: translateX(-100%);
+        }
+    }
 }
 
 h1,
@@ -1881,15 +1903,15 @@ input:checked+.slider:before {
     header {
         padding: 20px 20px;
     }
-    
-    .home01{
+
+    .home01 {
         display: flex;
         flex-direction: column-reverse;
         padding: 20px;
         font-size: 14px;
     }
 
-    .home-banner{
+    .home-banner {
         min-height: 100%;
         padding: 40px 20px;
         font-size: 12px;
@@ -1897,12 +1919,53 @@ input:checked+.slider:before {
         line-height: 1.5em;
     }
 
-    .home-banner h1{
+    .home-banner h1 {
         font-size: 30px;
         margin: 0;
     }
 
-    .home-banner .btn{
+    .btn {
         font-size: 12px;
     }
+
+    .home02 {
+        width: 100%;
+        padding: 20px;
+        font-size: 12px;
+    }
+
+    .flex {
+        flex-direction: column-reverse;
+        font-size: 12px;
+        margin: 20px;
+    }
+
+    .flex-img img {
+        width: 100%;
+    }
+
+    .btn-container .btn{
+        font-size: 12px;
+    }
+
+    .flex a{
+        font-size: 14px;
+    }
+
+    .flex a img {
+        scale: 0.6;
+        transform: translateY(8px);
+    }
+
+    h1,
+    h2 {
+        font-size: 26px !important;
+    }
+
+    .row .card {
+        min-width: 80px;
+        border-radius: 20px;
+        padding: 20px;
+    }
+
 }
