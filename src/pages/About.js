@@ -25,7 +25,7 @@ function About() {
                     </p>
                 </div>
 
-                <div className="mission">
+                <div className="mission vision">
                     <p>
                         Our vision is to be a global leader in software development, recognized for our ability to transform ideas into impactful solutions that drive digital transformation. We aspire to create a future where technology seamlessly integrates into every aspect of business, enabling organizations to thrive in an ever-changing world. By fostering a culture of innovation, collaboration, and excellence, we aim to set new standards in the industry and make a lasting positive impact on the businesses we serve.
                     </p>

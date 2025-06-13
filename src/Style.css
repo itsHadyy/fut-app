@@ -603,7 +603,7 @@ footer {
 }
 
 .about-banner {
-    background-image: url('../public/media/About/Frame\ 134.png');
+    background-image: url('../public/media/Home/Frame\ 133.png');
     background-size: cover;
     display: flex;
     align-items: center;
@@ -2077,6 +2077,10 @@ input:checked+.slider:before {
         padding: 20px;
     }
 
+    .footer-container{
+        margin-top: 40px;
+    }
+
     .footer-container h2 {
         margin-bottom: 300px;
     }
@@ -2115,5 +2119,48 @@ input:checked+.slider:before {
         justify-content: space-around;
         width: 70%;
         margin: auto;
+    }
+
+    .about-banner-container{
+        padding: 20px;
+    }
+
+    .about-banner {
+        height: 100%;
+        padding: 40px 20px;
+        font-size: 12px;
+        width: 100%;
+        line-height: 1.5em;
+    }
+
+    .about-banner h1 {
+        font-size: 30px;
+        margin: 0;
+        line-height: 1.5em;
+    }
+
+    .about01{
+        padding: 20px;
+        font-size: 14px;
+    }
+
+    .mission{
+        font-size: 12px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .vision{
+        flex-direction: column-reverse;
+    }
+
+    .values{
+        margin: 0;
+    }
+
+    .value{
+        margin-bottom: 20px;
+        text-align: justify;
     }
 }
