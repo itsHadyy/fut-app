@@ -183,8 +183,34 @@ a {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 30px 100px;
+    padding: 30px 0px;
     margin: 40px 0;
+    overflow: hidden;
+}
+
+.clients-scroll-container {
+    display: flex;
+    gap: 50px;
+    white-space: nowrap;
+    overflow-x: hidden;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.clients-scroll-container::-webkit-scrollbar {
+    display: none;
+}
+
+.clients-scroll-container img {
+    flex-shrink: 0;
+    height: 60px;
+    width: auto;
+    display: inline-block;
+}
+
+@keyframes scroll {
+    from { transform: translateX(0); }
+    to { transform: translateX(-100%); }
 }
 
 h1,
@@ -1879,5 +1905,4 @@ input:checked+.slider:before {
     .home-banner .btn{
         font-size: 12px;
     }
-
 }
