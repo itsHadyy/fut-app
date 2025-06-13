@@ -2064,8 +2064,56 @@ input:checked+.slider:before {
         max-width: 90%;
     }
 
-    .testimonial-pagination{
+    .testimonial-pagination {
         margin: 0;
     }
 
+    footer {
+        padding: 20px;
+    }
+
+    .footer-top {
+        max-width: 100%;
+        padding: 20px;
+    }
+
+    .footer-container h2 {
+        margin-bottom: 300px;
+    }
+
+    .footer-bottom {
+        font-size: 12px;
+        flex-direction: column-reverse;
+        align-items: center;
+        text-align: center;
+    }
+
+    .footer-info {
+        max-width: 100%;
+    }
+
+    .footer-info p {
+        font-size: 14px;
+    }
+
+    .footer-nav{
+        display: flex;
+        gap: 40px;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-around;
+        width: 70%;
+        margin: auto;
+    }
+
+    .footer-nav a{
+        font-size: 16px;
+    }
+
+    .follow-us{
+        text-align: center;
+        justify-content: space-around;
+        width: 70%;
+        margin: auto;
+    }
 }
