@@ -2163,4 +2163,29 @@ input:checked+.slider:before {
         margin-bottom: 20px;
         text-align: justify;
     }
+
+    .services-banner{
+        display: flex;
+        flex-direction: column;
+        width: 90%;
+        margin: 20px;
+        height: 100%;
+        padding: 20px;
+    }
+
+    .banner-content{
+        gap: 20px;
+    }
+
+    .projects-section{
+        padding: 20px;
+    }
+
+    .service-buttons{
+        flex-wrap: wrap;
+    }
+
+    .service-buttons .btn{
+        font-size: 14px;
+    }
 }
