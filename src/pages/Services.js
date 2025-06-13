@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'; // Assuming you are using React Router v6
 import { db } from '../firebaseConfig';
-import { collection, getDocs} from 'firebase/firestore';
+import { collection, getDocs } from 'firebase/firestore';
 
 import { Link } from "react-router-dom";
 
@@ -292,7 +292,7 @@ function Services() {
                             ) : (
                                 <div className="projects-slideshow mobile-projects">
                                     {projects.websites.map(project => (
-                                        <div key={project.id} className="project-item" onClick={() => handleProjectClick(project.id)}>
+                                        <div key={project.id} className="project-item website-project" onClick={() => handleProjectClick(project.id)}>
                                             <img src={project.image} alt={project.name} />
                                             <p>{project.name}</p>
                                         </div>
@@ -408,13 +408,19 @@ function Services() {
                         </div>
                         <div className="projects-section">
                             <h2>Check out our work!</h2>
-                            <div className="projects-slideshow smart-projects">
-                                {projects.smart_systems.map(project => (
-                                    <div key={project.id} className="project-item" onClick={() => handleProjectClick(project.id)}>
-                                        <img src={project.image} alt={project.name} />
-                                        <p>{project.name}</p>
-                                    </div>
-                                ))}
+                            <div className="projects-slideshow">
+                                <div className="project-item smart-projects">
+                                    <img src="media/Services/Systems/smart.png" alt="Smart Gates" />
+                                    <p>Smart Gates</p>
+                                </div>
+                                <div className="project-item smart-projects">
+                                    <img src="media/Services/Systems/smart.png" alt="Smart Mirrors" />
+                                    <p>Smart Mirrors</p>
+                                </div>
+                                <div className="project-item smart-projects">
+                                    <img src="media/Services/Systems/smart.png" alt="Smart Locks" />
+                                    <p>Smart Locks</p>
+                                </div>
                             </div>
                         </div>
                     </>

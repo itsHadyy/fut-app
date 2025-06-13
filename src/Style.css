@@ -891,8 +891,16 @@ ol ul {
     scrollbar-width: none;
 }
 
+.smart-projects{
+    width: 240px !important;
+}
+
 .smart-projects img {
-    width: 120px;
+    width: 120px !important;
+}
+
+.website-project{
+    width: 520px;
 }
 
 .project-item {
