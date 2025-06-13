@@ -1854,11 +1854,13 @@ input:checked+.slider:before {
 @media (max-width: 992px) {
     header {
         padding: 30px 40px;
+        justify-content: space-around !important;
     }
 
     header>div:nth-child(2) {
-        display: none;
-        /* Hide navigation links on smaller screens */
+        order: -1;
+        display: flex;
+        justify-content: flex-start;
     }
 
     header>div:nth-child(3) {
@@ -1875,10 +1877,9 @@ input:checked+.slider:before {
         display: none;
         flex-direction: column;
         position: absolute;
-        top: 90px;
+        top: 80px;
         left: 0;
         width: 100%;
-        background-color: var(--lightGray);
         border-radius: 0;
         padding: 20px 0;
         text-align: center;

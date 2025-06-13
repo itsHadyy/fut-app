@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 function Navbar() {
     const [isScrolled, setIsScrolled] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
+    const [currentLogo, setCurrentLogo] = useState(logo);
     const location = useLocation();
 
     useEffect(() => {
@@ -21,6 +22,32 @@ function Navbar() {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
+    useEffect(() => {
+        const updateLogo = () => {
+            const isDarkMode = document.documentElement.getAttribute('data-theme') === 'dark';
+            setCurrentLogo(isDarkMode ? logoWhite : logo);
+        };
+
+        // Initial check
+        updateLogo();
+
+        // Watch for theme changes
+        const observer = new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+                if (mutation.attributeName === 'data-theme') {
+                    updateLogo();
+                }
+            });
+        });
+
+        observer.observe(document.documentElement, {
+            attributes: true,
+            attributeFilter: ['data-theme']
+        });
+
+        return () => observer.disconnect();
+    }, []);
+
     const toggleMenu = () => {
         setIsOpen(!isOpen);
     };
@@ -29,7 +56,7 @@ function Navbar() {
         <header className={isScrolled ? 'blurred' : ''}>
 
             <div className="nav-links">
-                <ul className={isOpen ? 'open' : ''}>
+                <ul className={isOpen ? 'open + blurred' : ''}>
                     <li>
                         <Link to="/" className={location.pathname === '/' ? 'active' : ''} onClick={() => setIsOpen(false)}>
                             Home
@@ -59,7 +86,7 @@ function Navbar() {
             </div>
 
             <div>
-                <img src={logo} alt="FutApp Logo" />
+                <img src={currentLogo} alt="FutApp Logo" />
             </div>
 
             <div>
