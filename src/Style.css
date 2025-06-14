@@ -2188,4 +2188,69 @@ input:checked+.slider:before {
     .service-buttons .btn{
         font-size: 14px;
     }
+
+    .services-intro{
+        margin: 0;
+        padding-top: 0;
+    }
+
+    .services-intro h2{
+        font-size: 20px !important;
+    }
+
+    .services-intro-image {
+        width: 60px;
+    }
+
+    .services-intro-content{
+        width: 90%;
+        padding: 10px;
+    }
+
+    .services-intro p{
+        font-size: 12px;
+    }
+    .services-intro-image.left-image {
+        display: none;
+    }
+    
+    .services-intro-image.right-image {
+        display: none;
+    }
+
+    .services-intro p a{
+        font-size: 12px;
+    }
+
+    .service-content{
+        padding: 20px;
+        font-size: 12px;
+    }
+
+    .service-content ol, .service-content ul{
+        padding-left: 10px;
+        margin-bottom: 10px;
+    }
+
+    .service-content li{
+        margin: 0;
+    }
+
+    .website-project{
+        width: 100%;
+    }
+
+    .projects-slideshow{
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .smart-projects{
+        width: 100% !important;
+    }
+
+    .smart-projects img{
+        width: 100px !important;
+    }
 }
