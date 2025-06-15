@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { db } from '../firebaseConfig';
 import { collection, addDoc, getDocs, doc, updateDoc, deleteDoc, serverTimestamp } from 'firebase/firestore';
 import './AdminStyles.css'; // Import admin specific styles
@@ -38,7 +38,7 @@ function AdminDashboard() {
     const [previewCollection, setPreviewCollection] = useState('portfolio');
     const [validationErrors, setValidationErrors] = useState({});
 
-    const defaultPhases = {
+    const defaultPhases = useMemo(() => ({
         mobile: [
             'Concept & Planning - Defining the app\'s purpose, features, and target audience. Gathering requirements and sketching out initial ideas.',
             'UI/UX Design - Designing an intuitive and visually appealing interface that ensures a seamless user experience.',
@@ -51,7 +51,7 @@ function AdminDashboard() {
             'Development - Building the website with responsive design and required functionality.',
             'Testing & Launch - Quality assurance testing and deploying the website to production.'
         ]
-    };
+    }), []);
 
     // Update phases when type changes
     useEffect(() => {
