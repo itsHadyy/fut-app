@@ -34,16 +34,8 @@ function AdminDashboard() {
         productImages: [''],
         align: 'left',
     });
-    const [newFeature, setNewFeature] = useState({ title: '', description: '' });
-    const [newTech, setNewTech] = useState('');
-    const [newPlatform, setNewPlatform] = useState('');
-    const [newProjectImageUrl, setNewProjectImageUrl] = useState('');
-    const [newPhase, setNewPhase] = useState('');
-    const [newColor, setNewColor] = useState('');
-
     const [previewMode, setPreviewMode] = useState(false);
     const [previewCollection, setPreviewCollection] = useState('portfolio');
-
     const [validationErrors, setValidationErrors] = useState({});
 
     const defaultPhases = {
@@ -67,7 +59,7 @@ function AdminDashboard() {
             ...prev,
             phases: defaultPhases[activeType]
         }));
-    }, [activeType]);
+    }, [activeType, defaultPhases]);
 
     const fetchProjects = useCallback(async () => {
         setListLoading(true);
@@ -100,120 +92,6 @@ function AdminDashboard() {
     useEffect(() => {
         fetchProjects();
     }, [fetchProjects]);
-
-    // const handleAddFeature = () => {
-    //     if (newFeature.title && newFeature.description) {
-    //         setFormData(prev => ({
-    //             ...prev,
-    //             features: [...prev.features, newFeature]
-    //         }));
-    //         setNewFeature({ title: '', description: '' });
-    //     }
-    // };
-
-    // const handleRemoveFeature = (index) => {
-    //     setFormData(prev => ({
-    //         ...prev,
-    //         features: prev.features.filter((_, i) => i !== index)
-    //     }));
-    // };
-
-    // const handleAddTech = () => {
-    //     if (newTech.trim()) {
-    //         setFormData(prev => ({
-    //             ...prev,
-    //             technologies: [...prev.technologies, newTech.trim()]
-    //         }));
-    //         setNewTech('');
-    //     }
-    // };
-
-    // const handleRemoveTech = (index) => {
-    //     setFormData(prev => ({
-    //         ...prev,
-    //         technologies: prev.technologies.filter((_, i) => i !== index)
-    //     }));
-    // };
-
-    // const handleAddPlatform = () => {
-    //     if (newPlatform) {
-    //         setFormData(prev => ({
-    //             ...prev,
-    //             platforms: [...prev.platforms, newPlatform]
-    //         }));
-    //         setNewPlatform('');
-    //     }
-    // };
-
-    // const handleRemovePlatform = (index) => {
-    //     setFormData(prev => ({
-    //         ...prev,
-    //         platforms: prev.platforms.filter((_, i) => i !== index)
-    //     }));
-    // };
-
-    // const handleAddProjectImage = () => {
-    //     if (newProjectImageUrl.trim()) {
-    //         setFormData(prev => ({
-    //             ...prev,
-    //             projectImages: [...prev.projectImages, newProjectImageUrl.trim()]
-    //         }));
-    //         setNewProjectImageUrl('');
-    //     }
-    // };
-
-    // const handleRemoveProjectImage = (index) => {
-    //     setFormData(prev => ({
-    //         ...prev,
-    //         projectImages: prev.projectImages.filter((_, i) => i !== index)
-    //     }));
-    // };
-
-    // const handleAddPhase = () => {
-    //     if (newPhase) {
-    //         setFormData(prev => ({
-    //             ...prev,
-    //             phases: [...prev.phases, newPhase]
-    //         }));
-    //         setNewPhase('');
-    //     }
-    // };
-
-    // const handleAddProductImage = () => {
-    //     if (newProjectImageUrl.trim()) {
-    //         setFormData(prev => ({
-    //             ...prev,
-    //             productImages: [...prev.productImages, newProjectImageUrl.trim()]
-    //         }));
-    //         setNewProjectImageUrl('');
-    //     }
-    // };
-
-    // const handleAddColor = () => {
-    //     if (newColor && formData.colors.length < 3) {
-    //         setFormData(prev => ({
-    //             ...prev,
-    //             colors: [...prev.colors, newColor]
-    //         }));
-    //         setNewColor('');
-    //     }
-    // };
-
-    // const handleRemoveColor = (index) => {
-    //     if (formData.colors.length > 2) { // Ensure we always have at least 2 colors
-    //         setFormData(prev => ({
-    //             ...prev,
-    //             colors: prev.colors.filter((_, i) => i !== index)
-    //         }));
-    //     }
-    // };
-
-    // const handleRemoveItem = (field, index) => {
-    //     setFormData(prev => ({
-    //         ...prev,
-    //         [field]: prev[field].filter((_, i) => i !== index)
-    //     }));
-    // };
 
     const validateForm = () => {
         const errors = {};

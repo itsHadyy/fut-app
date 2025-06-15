@@ -49,7 +49,7 @@ function Home() {
                 }
             });
         };
-    }, []); // Remove currentTestimonialIndex from dependencies to prevent unnecessary re-renders
+    }, [currentTestimonialIndex]);
 
     return (
         <div>
