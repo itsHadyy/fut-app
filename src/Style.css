@@ -1078,7 +1078,7 @@ ol ul {
 
 .radio {
     transform: translateY(20px);
-    width: 30px;
+    width: 30px !important;
     height: 30px;
 }
 
